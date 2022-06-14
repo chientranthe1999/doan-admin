@@ -1,0 +1,55 @@
+{
+  "router": {
+    "home": "Home",
+    "user": "User",
+    "device": "Device",
+    "article": "Article",
+    "infor": "WQI Information"
+  },
+
+  "common": {
+    "logout": "Logout"
+  },
+
+  "label": {
+    "action": "Action",
+    "location": "Location",
+    "type": "Type",
+    "pH": "pH",
+    "wqi": "WQI",
+    "temperature": "Temperature",
+    "turbidity": "Turbidity",
+    "DO": "DO",
+    "NH4": "NH4",
+    "BOD5": "BOD5",
+    "tss": "tss",
+    "coliform": "coliform",
+    "cod": "cod",
+    "PO4": "PO4",
+    "device_name": "Device Name",
+    "longtitude": "Longtitude",
+    "latitude": "Latitude",
+    "email": "Email",
+    "name": "Full name",
+    "phone": "Phone",
+    "role": "Role",
+    "status": "Status",
+    "time": "Time"
+  },
+
+  "title": {
+    "device_list": "Device List",
+    "device_add": "Add a new device",
+    "user_list": "User List",
+    "user_add": "Add a new user",
+    "wqi": "Finding your WQI Information here"
+  },
+
+  "button": {
+    "add": "Add"
+  },
+
+  "validation": {
+    "required": "{attribute} is a required item."
+  }
+}
