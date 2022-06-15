@@ -1,15 +1,18 @@
 import Cookies from 'js-cookie'
 
-const TokenKey = 'STADIUM-MANAGER-TOKEN'
+// TODO: Handle admin token
+const ADMIN_TOKEN = 'STADIUM-ADMIN-TOKEN'
+
+const MANAGER_TOKEN = 'STADIUM-MANAGER-TOKEN'
 
 export function getToken() {
-  return Cookies.get(TokenKey)
+  return Cookies.get(MANAGER_TOKEN)
 }
 
 export function setToken(token) {
-  return Cookies.set(TokenKey, token)
+  return Cookies.set(MANAGER_TOKEN, token)
 }
 
 export function removeToken() {
-  return Cookies.remove(TokenKey)
+  return Cookies.remove(MANAGER_TOKEN)
 }

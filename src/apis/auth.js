@@ -4,6 +4,6 @@ export function login(data) {
   return request.post('/auth/login', data)
 }
 
-export function getInfor(data) {
-  return request.get('/auth/me', data)
+export function getInfor() {
+  return request.get('/auth/me')
 }

@@ -1,20 +1,21 @@
 import axios from 'axios'
 import store from '@/stores'
-import { getToken } from './auth'
+import { getToken } from '@/utils/auth'
 
-const API_BASE_URL = process.env.VUE_APP_API_BASE_URL || 'http://localhost:8000'
+const API_BASE_URL = process.env.VUE_APP_API_BASE_URL
 
 // create an axios instance
 const service = axios.create({
-  withCredentials: true,
   baseURL: API_BASE_URL,
   timeout: process.env.VUE_APP_API_TIMEOUT || 60000 // request timeout
 })
 
 // request interceptor
 service.interceptors.request.use(
-  config => {
+  (config) => {
     // do something before request is sent
+
+    console.log(getToken())
 
     if (store.getters.token) {
       config.headers['Authorization'] = 'Bearer ' + getToken()
@@ -26,7 +27,7 @@ service.interceptors.request.use(
 
     return config
   },
-  error => {
+  (error) => {
     // do something with request error
     return Promise.reject(error)
   }
@@ -35,7 +36,8 @@ service.interceptors.request.use(
 // response interceptor
 service.interceptors.response.use(
   (response) => response,
-  async(error) => {
+  // eslint-disable-next-line space-before-function-paren
+  async (error) => {
     return Promise.reject(error)
   }
 )

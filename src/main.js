@@ -31,6 +31,7 @@ Vue.config.productionTip = false
 
 Vue.use(ElementUI, { locale })
 
+import '@/permission'
 import injectFormValidates from '@/mixins/validation'
 Vue.mixin(injectFormValidates)
 import 'windi.css'
