@@ -8,7 +8,7 @@
         </el-form-item>
 
         <el-form-item label="Mật khẩu" prop="password">
-          <el-input v-model="form.password" type="password" />
+          <el-input v-model="form.password" type="password" @keyup.enter.native="login" />
         </el-form-item>
       </el-form>
 
@@ -46,6 +46,7 @@ export default {
 
   methods: {
     async login() {
+      console.log('hihi')
       try {
         this.loading = true
         const isValid = await this.$refs.form.validate()
@@ -55,11 +56,11 @@ export default {
             password: this.form.password
           })
 
-          this.$router.push('/')
+          this.$router.push('/manage')
           this.$vmess.success('Đăng nhập thành công')
         }
       } catch (e) {
-        this.$vmess.error('Tài khoản hoặc mật khẩu không chính xác! Vui lòng kiểm tra lại')
+        this.$vmess.error(e?.response?.data?.message || 'Đăng nhập thất bại')
       } finally {
         this.loading = false
       }

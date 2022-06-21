@@ -66,8 +66,6 @@ const actions = {
     commit('SET_NAME', null)
     removeToken()
     resetRouter()
-
-    dispatch('tagsView/delAllViews', null, { root: true })
   },
 
   // remove token

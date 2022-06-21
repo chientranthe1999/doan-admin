@@ -6,6 +6,31 @@ Vue.use(VueRouter)
 
 const allRoutes = [
   {
+    path: '/manage',
+    component: AmdinLayout,
+    meta: { title: 'Quản lý', icon: 'el-icon-money' },
+    children: [
+      {
+        path: '',
+        name: 'Dashboard',
+        component: () => import('@/views/manage/Dashboard'),
+        meta: { title: 'Dashboard' }
+      },
+      {
+        path: 'debt',
+        name: 'DebtList',
+        component: () => import('@/views/manage/Debt'),
+        meta: { title: 'Quản lý công nợ' }
+      },
+      {
+        path: 'booking',
+        name: 'BookingList',
+        component: () => import('@/views/manage/Booking'),
+        meta: { title: 'Quản lý đơn hàng' }
+      }
+    ]
+  },
+  {
     path: '/stadium',
     component: AmdinLayout,
     meta: { title: 'Sân vận động', icon: 'el-icon-location-outline' },
@@ -21,6 +46,20 @@ const allRoutes = [
         name: 'StadiumAdd',
         component: () => import('@/views/stadium/Add'),
         meta: { title: 'Thêm sân mới' }
+      }
+    ]
+  },
+
+  {
+    path: '/comment',
+    component: AmdinLayout,
+    meta: { title: 'Comment', icon: 'el-icon-chat-line-square' },
+    children: [
+      {
+        path: '',
+        name: 'CommentList',
+        component: () => import('@/views/comment/List'),
+        meta: { title: 'Comment' }
       }
     ]
   },
@@ -81,32 +120,6 @@ const allRoutes = [
         name: 'UserAdd',
         component: () => import('@/views/user/Add'),
         meta: { title: 'Thêm mới chủ sân' }
-      }
-    ]
-  },
-
-  {
-    path: '/manage',
-    component: AmdinLayout,
-    meta: { title: 'Quản lý', icon: 'el-icon-money' },
-    children: [
-      // {
-      //   path: '',
-      //   name: 'ManageList',
-      //   component: () => import('@/views/user/List'),
-      //   meta: { title: 'Danh sách chủ sân' }
-      // },
-      {
-        path: 'debt',
-        name: 'DebtList',
-        component: () => import('@/views/manage/Debt'),
-        meta: { title: 'Quản lý công nợ' }
-      },
-      {
-        path: 'booking',
-        name: 'BookingList',
-        component: () => import('@/views/manage/Booking'),
-        meta: { title: 'Quản lý đơn hàng' }
       }
     ]
   },
