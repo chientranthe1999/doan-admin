@@ -26,6 +26,66 @@ const allRoutes = [
   },
 
   {
+    path: '/article',
+    component: AmdinLayout,
+    meta: { title: 'Tin tức', icon: 'el-icon-notebook-1' },
+    children: [
+      {
+        path: '',
+        name: 'ArticleList',
+        component: () => import('@/views/article/List'),
+        meta: { title: 'Danh sách bài viết' }
+      },
+      {
+        path: 'add',
+        name: 'ArticleAdd',
+        component: () => import('@/views/article/Add'),
+        meta: { title: 'Thêm bài mới' }
+      }
+    ]
+  },
+
+  {
+    path: '/voucher',
+    component: AmdinLayout,
+    meta: { title: 'Voucher', icon: 'el-icon-s-ticket' },
+    children: [
+      {
+        path: '',
+        name: 'VoucherList',
+        component: () => import('@/views/voucher/List'),
+        meta: { title: 'Danh sách voucher' }
+      },
+      {
+        path: 'add',
+        name: 'VoucherAdd',
+        component: () => import('@/views/voucher/Add'),
+        meta: { title: 'Thêm voucher mới' }
+      }
+    ]
+  },
+
+  {
+    path: '/user',
+    component: AmdinLayout,
+    meta: { title: 'Quản lý chủ sân', icon: 'el-icon-s-custom' },
+    children: [
+      {
+        path: '',
+        name: 'UserList',
+        component: () => import('@/views/user/List'),
+        meta: { title: 'Danh sách chủ sân' }
+      },
+      {
+        path: 'add',
+        name: 'UserAdd',
+        component: () => import('@/views/user/Add'),
+        meta: { title: 'Thêm mới chủ sân' }
+      }
+    ]
+  },
+
+  {
     path: '/login',
     component: () => import('@/views/auth/Login'),
     meta: { title: 'Đăng nhập' },

@@ -13,17 +13,11 @@
                   <el-col :xs="24" :sm="24" :md="12" :lg="12" :xl="12" class="flex">
                     <el-form-item label="Loại sân" prop="company_id" class="flex-1">
                       <el-select v-model="part.company_id" class="w-100" @change="getCarOptions(part.company_id)">
-                        <el-option
-                          v-for="company in companies"
-                          :key="company.id"
-                          label="company.name"
-                          :value="company.id"
-                        />
+                        <!-- v-for="company in companies"
+                          :key="company.id" -->
+                        <el-option label="company.name" value="Chọn loại sân" />
                       </el-select>
                     </el-form-item>
-                    <div class="w-[40px] h-[40px] pt-[46px] text-[1.5em] text-center" @click="isOpenType = true">
-                      <v-icon icon-class="plus" class="cursor-pointer hover:opacity-80" />
-                    </div>
                   </el-col>
 
                   <!-- car -->
@@ -65,6 +59,36 @@
                   </el-col>
                 </el-row>
 
+                <div class="box-shadow-1 bordered-5 bg--white pd-1-em mb-1-em">
+                  <p>Service</p>
+                  <el-row v-for="(item, i) in services" :key="i" :gutter="12">
+                    <el-col :xs="7" :sm="7" :md="7" :lg="7">
+                      <el-form-item label="Thời gian">
+                        <el-input v-model="services[i].timeStart" />
+                      </el-form-item>
+                    </el-col>
+                    <el-col :xs="7" :sm="7" :md="7" :lg="7">
+                      <el-form-item label="Giá tiền">
+                        <el-input v-model="services[i].price" />
+                      </el-form-item>
+                    </el-col>
+                    <el-col :xs="8" :sm="8" :md="8" :lg="8">
+                      <el-form-item label="Tên dịch vụ">
+                        <el-input v-model="services[i].name" />
+                      </el-form-item>
+                    </el-col>
+                    <el-col :span="1">
+                      <i
+                        v-if="services.length > 1"
+                        class="el-icon-close mt-[46px] text-[1.5rem] hover:text-[red] cursor-pointer"
+                        @click="deleteService(i)"
+                      />
+                    </el-col>
+                  </el-row>
+
+                  <el-button type="primary" size="small" @click="services.push({})">Thêm mới</el-button>
+                </div>
+
                 <!-- Rent price -->
                 <el-form-item label="Giá thuê" prop="shared_code">
                   <el-input v-model="part.shared_codes" class="w-100" maxlength="12" show-word-limit />
@@ -76,26 +100,9 @@
                 </el-form-item>
               </div>
             </el-col>
-            <el-col :xs="24" :sm="24" :md="8" :xl="8">
-              <!-- Ảnh Banner -->
-              <div class="box-shadow-1 bordered-5 bg--white pd-1-em mb-1-em">
-                <p class="mb-[1em]">Ảnh banner</p>
-                <div>
-                  <el-upload
-                    class="upload-demo"
-                    action="https://jsonplaceholder.typicode.com/posts/"
-                    :on-preview="handlePreview"
-                    :on-remove="handleRemove"
-                    :file-list="fileList"
-                    list-type="picture"
-                    :auto-upload="false"
-                  >
-                    <el-button size="small" type="primary">Click to upload</el-button>
-                    <div slot="tip" class="el-upload__tip">jpg/png files with a size less than 500kb</div>
-                  </el-upload>
-                </div>
-              </div>
 
+            <el-col :xs="24" :sm="24" :md="8" :xl="8">
+              <!-- Image  -->
               <div class="box-shadow-1 bordered-5 bg--white pd-1-em mb-1-em">
                 <p class="mb-[1em]">Ảnh chi tiết</p>
                 <div>
@@ -113,6 +120,32 @@
                   </el-upload>
                 </div>
               </div>
+
+              <!-- Time Gold  -->
+              <div class="box-shadow-1 bordered-5 bg--white pd-1-em mb-1-em">
+                <p>Giờ vàng</p>
+                <el-row v-for="(item, i) in timeGold" :key="i" :gutter="12">
+                  <el-col :xs="11" :sm="11" :md="11" :lg="11">
+                    <el-form-item label="Thời gian">
+                      <el-input v-model="timeGold[i].timeStart" />
+                    </el-form-item>
+                  </el-col>
+                  <el-col :xs="10" :sm="10" :md="10" :lg="10">
+                    <el-form-item label="Giá tiền">
+                      <el-input v-model="timeGold[i].price" />
+                    </el-form-item>
+                  </el-col>
+                  <el-col :span="3">
+                    <i
+                      v-if="timeGold.length > 1"
+                      class="el-icon-close mt-[46px] text-[1.5rem] hover:text-[red] cursor-pointer"
+                      @click="deleteTimeGold(i)"
+                    />
+                  </el-col>
+                </el-row>
+
+                <el-button type="primary" size="small" @click="timeGold.push({})">Thêm mới</el-button>
+              </div>
             </el-col>
           </el-row>
         </el-form>
@@ -124,7 +157,7 @@
     </main>
 
     <!-- dialog add new place type -->
-    <el-dialog title="Tạo loại sân mới" :visible.sync="isOpenType">
+    <!-- <el-dialog title="Tạo loại sân mới" :visible.sync="isOpenType">
       <el-form :model="form">
         <el-form-item label="Loại sân">
           <el-input v-model="form.name" autocomplete="off" show-word-limit maxlength="50" />
@@ -134,7 +167,7 @@
         <el-button @click="isOpenType = false">Cancel</el-button>
         <el-button type="primary" @click="dialogFormVisible = false">Confirm</el-button>
       </span>
-    </el-dialog>
+    </el-dialog> -->
   </div>
 </template>
 
@@ -143,8 +176,8 @@ export default {
   data() {
     return {
       loading: false,
-      providers: [],
-      companies: [],
+      services: [{}],
+      timeGold: [{}],
       rules: {},
       cars: [],
       value1: undefined,
@@ -175,6 +208,14 @@ export default {
     },
     handlePreview(file) {
       this.fileList.push(file.url)
+    },
+
+    deleteService(index) {
+      this.services.splice(index, 1)
+    },
+
+    deleteTimeGold(index) {
+      this.timeGold.splice(index, 1)
     }
   }
 }

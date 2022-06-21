@@ -2,34 +2,34 @@
   <div>
     <v-header
       :has-button="true"
+      title-icon="user"
       :button-text="$t('button.add')"
-      :title-text="$t('title.user_list')"
-      @buttonClick="isOpen = true"
+      title-text="Quản lý chủ sân"
+      @buttonClick="$router.push({ name: 'UserAdd' })"
     />
 
     <div class="content-main-container">
       <div class="content-main-container">
         <div class="bg-white">
           <v-table :table-data="results" :columns="cols" :limit="limit" :page="page" :total="total">
-            <template slot="action" slot-scope="{ row }">
+            <template slot="status">
+              <div class="text-center bg-[#00b5ad] text-[white] rounded-lg py-[0.5rem] w-[85%] mx-auto">Active</div>
+            </template>
+            <template slot="action">
               <div class="text-center">
+                <el-button type="primary" icon="el-icon-check" circle />
+                <el-button type="danger" icon="el-icon-minus" circle />
                 <el-button type="success" icon="el-icon-edit" circle />
-                <el-button type="danger" icon="el-icon-delete" circle />
               </div>
             </template>
           </v-table>
-          <UserInput :title="$t('title.device_add')" :is-open.sync="isOpen" />
         </div>
       </div>
     </div>
   </div>
 </template>
 <script>
-import UserInput from './UserInput.vue'
 export default {
-  components: {
-    UserInput
-  },
   data() {
     return {
       loading: false,
@@ -39,36 +39,36 @@ export default {
       limit: 20,
       results: [
         {
-          device: 'ThietBi1',
-          location: 'Hihi',
-          type: 'esp32'
+          name: 'Thắng Dp',
+          phone: '12345678',
+          status: 'Active'
         }
       ],
 
       cols: [
         {
-          prop: 'email',
-          label: this.$t('label.email'),
-          minWidth: '20'
-        },
-        {
           prop: 'name',
-          label: this.$t('label.name'),
+          label: 'Họ và tên',
           minWidth: '20'
         },
         {
           prop: 'phone',
-          label: this.$t('label.phone'),
-          minWidth: '20'
-        },
-        {
-          prop: 'role',
-          label: this.$t('label.role'),
+          label: 'Số điện thoại',
           minWidth: '15'
         },
         {
+          prop: 'email',
+          label: 'Email',
+          minWidth: '15'
+        },
+        {
+          prop: 'address',
+          label: 'Địa chỉ',
+          minWidth: '25'
+        },
+        {
           prop: 'status',
-          label: this.$t('label.status'),
+          label: 'Trạng thái',
           minWidth: '10'
         },
         {

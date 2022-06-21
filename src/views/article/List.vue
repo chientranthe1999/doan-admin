@@ -3,9 +3,9 @@
     <v-header
       :has-button="true"
       button-text="Thêm mới"
-      title-text="Danh sách sân vận động"
+      title-text="Danh sách bài viết"
       title-icon="stadium"
-      @buttonClick="$router.push({ name: 'StadiumAdd' })"
+      @buttonClick="$router.push({ name: 'ArticleAdd' })"
     />
     <main class="content-main-container">
       <!-- Result data -->
@@ -106,13 +106,6 @@ export default {
     }
   },
   computed: {
-    currentItems() {
-      if (this.total === 0 || !this.results.length) return 0
-      return this.total > (this.page + 1) * this.limit
-        ? `${(this.page - 1) * this.limit + 1} - ${(this.page + 1) * this.limit}`
-        : `${(this.page - 1) * this.limit + 1} - ${this.total}`
-    },
-
     disabledPrintButton() {
       return this.selectedItems.length === 0
     }

@@ -3,7 +3,6 @@
     <transition name="fade-transform" mode="out-in">
       <router-view :key="key" />
     </transition>
-    <!-- <div class="text-center footer-main">Smart Device &copy; All rights reserved.</div> -->
   </section>
 </template>
 
