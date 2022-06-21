@@ -1,24 +1,35 @@
 <template lang="html">
   <div>
     <v-header
-      :has-button="true"
-      title-icon="user"
+      :has-button="false"
+      title-icon="debt"
       :button-text="$t('button.add')"
-      title-text="Quản lý chủ sân"
+      title-text="Quản lý công nợ"
       @buttonClick="$router.push({ name: 'UserAdd' })"
     />
 
     <div class="content-main-container">
-      <div class="bg-white">
+      <div class="bg-white box-shadow-1 p-[0.5em] rounded-md">
+        <div class="p-[1em] rounded-sm mb-[1em] flex items-center">
+          <p class="text-md uppercase mr-[1em]">Mức phí gas</p>
+          <div class="text-lg font-bold text-[#e84c3d] mr-[1em]">
+            <el-input v-model="gas" class="w-60px" disabled /> %
+          </div>
+          <el-button type="success" icon="el-icon-edit" circle />
+        </div>
+        <div class="p-[1em] rounded-sm mb-[1em] flex items-center">
+          <p class="text-md uppercase">Tổng số tiền cần thanh toán với chủ sân</p>
+          <p class="ml-[auto] text-lg font-bold text-[#e84c3d]">125.000.000đ</p>
+        </div>
         <v-table :table-data="results" :columns="cols" :limit="limit" :page="page" :total="total">
           <template slot="status">
-            <div class="text-center bg-[#00b5ad] text-[white] rounded-lg py-[0.5rem] w-[85%] mx-auto">Active</div>
+            <div class="text-center bg-[#00b5ad] text-[white] rounded-lg py-[0.5rem] w-[85%] mx-auto">
+              Đã thanh toán
+            </div>
           </template>
           <template slot="action">
             <div class="text-center">
-              <el-button type="primary" icon="el-icon-check" circle />
-              <el-button type="danger" icon="el-icon-minus" circle />
-              <el-button type="success" icon="el-icon-edit" circle />
+              <el-button type="primary" icon="el-icon-check">Pay</el-button>
             </div>
           </template>
         </v-table>
@@ -35,6 +46,7 @@ export default {
       total: 1,
       page: 1,
       limit: 20,
+      gas: 10,
       results: [
         {
           name: 'Thắng Dp',
@@ -46,7 +58,7 @@ export default {
       cols: [
         {
           prop: 'name',
-          label: 'Họ và tên',
+          label: 'Tên chủ sân',
           minWidth: '20'
         },
         {
@@ -55,14 +67,9 @@ export default {
           minWidth: '15'
         },
         {
-          prop: 'email',
-          label: 'Email',
-          minWidth: '15'
-        },
-        {
-          prop: 'address',
-          label: 'Địa chỉ',
-          minWidth: '25'
+          prop: 'debt',
+          label: 'Số tiền đang nợ',
+          minWidth: '10'
         },
         {
           prop: 'status',
@@ -72,11 +79,11 @@ export default {
         {
           prop: 'action',
           label: this.$t('label.action'),
-          minWidth: '15'
+          minWidth: '10'
         }
       ]
     }
   }
 }
 </script>
-<style lang="scss"></style>
+<style lang=""></style>

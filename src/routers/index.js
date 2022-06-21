@@ -86,6 +86,32 @@ const allRoutes = [
   },
 
   {
+    path: '/manage',
+    component: AmdinLayout,
+    meta: { title: 'Quản lý', icon: 'el-icon-money' },
+    children: [
+      // {
+      //   path: '',
+      //   name: 'ManageList',
+      //   component: () => import('@/views/user/List'),
+      //   meta: { title: 'Danh sách chủ sân' }
+      // },
+      {
+        path: 'debt',
+        name: 'DebtList',
+        component: () => import('@/views/manage/Debt'),
+        meta: { title: 'Quản lý công nợ' }
+      },
+      {
+        path: 'booking',
+        name: 'BookingList',
+        component: () => import('@/views/manage/Booking'),
+        meta: { title: 'Quản lý đơn hàng' }
+      }
+    ]
+  },
+
+  {
     path: '/login',
     component: () => import('@/views/auth/Login'),
     meta: { title: 'Đăng nhập' },
