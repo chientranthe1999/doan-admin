@@ -23,3 +23,7 @@ export function createPlaceService(data) {
 export function createTimeGole(data) {
   return request.post('/owner/place/time-gold', data)
 }
+
+export function getPlaceOwner() {
+  return request.get('/owner/place?page=1&pageSize=10')
+}

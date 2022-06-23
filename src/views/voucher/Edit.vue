@@ -1,6 +1,6 @@
 <template lang="html">
   <div>
-    <v-header title-text="Thêm mới voucher" title-icon="voucher" />
+    <v-header title-text="Chỉnh sửa voucher" title-icon="voucher" />
     <div class="content-main-container">
       <main class="bg-white rounded-lg p-[1em] py-[2em] max-w-[1140px] mx-auto">
         <el-form label-position="top">
@@ -48,9 +48,17 @@
                 </el-col>
               </el-row>
             </el-col>
-            <el-form-item label="Ngày Hết Hạn">
-              <el-date-picker v-model="endDate" type="dates" placeholder="Pick one or more dates" />
+            <el-form-item label="Trạng thái">
+              <el-radio-group v-model="isActive">
+                <el-radio :label="1">Đang áp dụng</el-radio>
+                <el-radio :label="0">Không áp dụng</el-radio>
+              </el-radio-group>
             </el-form-item>
+            <el-form-item label="Ngày Hết Hạn">
+              <el-date-picker v-model="endDate" type="dates" :placeholder="endDate" />
+              {{ endDate }}
+            </el-form-item>
+
             <el-col :sm="24" :md="24" :lg="24">
               <el-form-item label="Điều kiện áp dụng voucher đơn trị giá">
                 <el-input v-model="moneyCondition" class="w-full" />
@@ -66,6 +74,7 @@
             <el-button class="btn--green btn" icon="el-icon-circle-check" @click="onSubmitCreateVoucher">
               Save
             </el-button>
+            <el-button class="btn--red btn" @click="onClickDeleteVoucher">Xóa Voucher</el-button>
           </div>
         </el-form>
       </main>
@@ -73,9 +82,9 @@
   </div>
 </template>
 <script>
-import { getPlaceOwner } from '@/apis/place'
-import { createVoucher } from '@/apis/voucher'
-import moment from 'moment'
+import { getPlaceOwner } from '../../apis/place'
+import { editVoucher, getDetailsVoucher, deleteVoucher } from '../../apis/voucher'
+import * as moment from 'moment'
 export default {
   name: 'VoucherList',
   data() {
@@ -89,19 +98,33 @@ export default {
       type: '',
       value: '',
       endDate: '',
-      name: ''
+      name: '',
+      isActive: 0
     }
+  },
+  async created() {
+    const voucher = await getDetailsVoucher(this.$route.params.id)
+    const { place, maxMoneySale, moneyCondition, name, value, type, endDate, amount, isActive } = voucher.data.data
+    this.selectPlace = place
+    this.maxMoneySale = maxMoneySale
+    this.moneyCondition = moneyCondition
+    this.name = name
+    this.value = value
+    this.type = type === 0 ? '%' : 'VND'
+    this.amount = amount
+    this.isActive = isActive
+    this.endDate = endDate
   },
 
   async mounted() {
     this.listPlace = await (await getPlaceOwner()).data.data.records
   },
-
   methods: {
     onChangePlace(place) {
       this.selectPlace = place
     },
     async onSubmitCreateVoucher() {
+      console.log(moment(new Date(this.endDate)).format('YYYY/MM/DD'))
       const voucherBody = {
         maxMoneySale: this.maxMoneySale,
         moneyCondition: this.moneyCondition,
@@ -110,11 +133,17 @@ export default {
         type: this.type === '%' ? 0 : 1,
         amount: Number(this.amount),
         place: this.selectPlace,
+        isActive: this.isActive,
         endDate: moment(new Date(this.endDate)).format('YYYY/MM/DD')
       }
+      await editVoucher(this.$route.params.id, voucherBody)
+      this.$vmess.success('Edit thành công')
+      this.$router.push('/voucher')
+    },
 
-      await createVoucher(voucherBody)
-      this.$vmess.success('Tạo voucher thành công')
+    async onClickDeleteVoucher() {
+      await deleteVoucher(this.$route.params.id)
+      this.$vmess.success('Xóa voucher thành công')
       this.$router.push('/voucher')
     }
   }
