@@ -14,12 +14,7 @@
                   placeholder="Chọn sân"
                   @change="onChangePlace"
                 >
-                  <el-option
-                    v-for="item in listPlace"
-                    :key="item.id"
-                    :label="item.name"
-                    :value="item"
-                  />
+                  <el-option v-for="item in listPlace" :key="item.id" :label="item.name" :value="item" />
                 </el-select>
               </el-form-item>
             </el-col>
@@ -52,15 +47,10 @@
                   </el-form-item>
                 </el-col>
               </el-row>
-              
             </el-col>
-<el-form-item label="Ngày Hết Hạn">
-                 <el-date-picker
-          v-model="endDate"
-          type="dates"
-          placeholder="Pick one or more dates"
-        />
-              </el-form-item>
+            <el-form-item label="Ngày Hết Hạn">
+              <el-date-picker v-model="endDate" type="dates" placeholder="Pick one or more dates" />
+            </el-form-item>
             <el-col :sm="24" :md="24" :lg="24">
               <el-form-item label="Điều kiện áp dụng voucher đơn trị giá">
                 <el-input v-model="moneyCondition" class="w-full" />
@@ -73,12 +63,9 @@
             </el-col>
           </el-row>
           <div class="text-right mt-1-em">
-            <el-button
-              class="btn--green btn"
-              icon="el-icon-circle-check"
-              @click="onSubmitCreateVoucher"
-              >Save</el-button
-            >
+            <el-button class="btn--green btn" icon="el-icon-circle-check" @click="onSubmitCreateVoucher">
+              Save
+            </el-button>
           </div>
         </el-form>
       </main>
@@ -86,27 +73,33 @@
   </div>
 </template>
 <script>
-import { getPlaceOwner } from "../../apis/place";
-import { createVoucher } from "../../apis/voucher";
-import * as moment from "moment";
+import { getPlaceOwner } from '@/apis/place'
+import { createVoucher } from '@/apis/voucher'
+import moment from 'moment'
 export default {
+  name: 'VoucherList',
   data() {
     return {
       listVoucher: [],
       listPlace: [],
       selectPlace: {},
-      amount: "",
-      moneyCondition: "",
-      maxMoneySale: "",
-      type: "",
-      value: "",
-      endDate: "",
-      name: "",
-    };
+      amount: '',
+      moneyCondition: '',
+      maxMoneySale: '',
+      type: '',
+      value: '',
+      endDate: '',
+      name: ''
+    }
   },
+
+  async mounted() {
+    this.listPlace = await (await getPlaceOwner()).data.data.records
+  },
+
   methods: {
     onChangePlace(place) {
-      this.selectPlace = place;
+      this.selectPlace = place
     },
     async onSubmitCreateVoucher() {
       const voucherBody = {
@@ -114,21 +107,17 @@ export default {
         moneyCondition: this.moneyCondition,
         name: this.name,
         value: this.value,
-        type: this.type === "%" ? 0 : 1,
+        type: this.type === '%' ? 0 : 1,
         amount: Number(this.amount),
         place: this.selectPlace,
-        endDate: moment(new Date(this.endDate)).format("YYYY/MM/DD"),
-      };
-      await createVoucher(voucherBody);
-      this.$vmess.success("Tạo voucher thành công");
-      this.$router.push("/voucher");
-    },
-  },
-  name: "VoucherList",
+        endDate: moment(new Date(this.endDate)).format('YYYY/MM/DD')
+      }
 
-  async mounted() {
-    this.listPlace = await (await getPlaceOwner()).data.data.records;
-  },
-};
+      await createVoucher(voucherBody)
+      this.$vmess.success('Tạo voucher thành công')
+      this.$router.push('/voucher')
+    }
+  }
+}
 </script>
 <style lang="scss"></style>

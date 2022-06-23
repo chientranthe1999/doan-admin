@@ -9,45 +9,23 @@
     />
 
     <main class="content-main-container">
-      <el-row
-        :gutter="12"
-        class="box-shadow-1 rounded-sm py-[1rem] min-h-[80vh]"
-      >
-        <el-col
-          v-for="voucher in listVoucher"
-          :key="voucher.id"
-          :xs="24"
-          :sm="12"
-          :md="12"
-          :lg="6"
-        >
+      <el-row :gutter="12" class="box-shadow-1 rounded-sm py-[1rem] min-h-[80vh]">
+        <el-col v-for="voucher in listVoucher" :key="voucher.id" :xs="24" :sm="12" :md="12" :lg="6">
           <div
-            @click="onClickVoucher(voucher.id)"
             class="flex mx-auto w-fit mb-[1.5em] cursor-pointer hover:opacity-70"
+            @click="onClickVoucher(voucher.id)"
           >
             <div class="card card-right rounded-l-md overflow-hidden">
-              <p class="bg-[#00b5ad] text-center py-[4px] text-[white]">
-                Thông tin
-              </p>
+              <p class="bg-[#00b5ad] text-center py-[4px] text-[white]">Thông tin</p>
               <div class="p-[0.5em] min-h-[90px]">
                 <p class="font-bold">{{ voucher.name }}</p>
                 <p class="font-400 text-xs">
                   Giảm giá :
-                  {{
-                    voucher.type == 0
-                      ? `${voucher.value}%`
-                      : `${voucher.value} VND`
-                  }}
+                  {{ voucher.type == 0 ? `${voucher.value}%` : `${voucher.value} VND` }}
                 </p>
-                <p class="font-400 text-xs">
-                  Điều kiện áp dụng đơn từ : {{ voucher.moneyCondition }} VND
-                </p>
-                <p class="font-400 text-xs">
-                  Giảm tối đa : {{ voucher.moneyCondition }} VND
-                </p>
-                <p class="font-400 text-xs">
-                  Ngày hết hạn: {{ voucher.endDate }}
-                </p>
+                <p class="font-400 text-xs">Điều kiện áp dụng đơn từ : {{ voucher.moneyCondition }} VND</p>
+                <p class="font-400 text-xs">Giảm tối đa : {{ voucher.moneyCondition }} VND</p>
+                <p class="font-400 text-xs">Ngày hết hạn: {{ voucher.endDate }}</p>
                 <p class="font-400 text-xs">
                   Địa điểm áp dụng: {{ voucher.place.name }}-
                   {{ voucher.place.address }}
@@ -55,22 +33,14 @@
               </div>
             </div>
 
-            <div
-              class="card card-left rounded-r-md min-w-[100px] text-center flex-col"
-            >
-              <p class="bg-[#00b5ad] rounded-tr-md py-[4px] text-[white]">
-                Số lượng
-              </p>
+            <div class="card card-left rounded-r-md min-w-[100px] text-center flex-col">
+              <p class="bg-[#00b5ad] rounded-tr-md py-[4px] text-[white]">Số lượng</p>
               <p class="flex-grow py-[1.5em]">{{ voucher.amount }}</p>
             </div>
-            <div
-              class="card card-left rounded-r-md min-w-[100px] text-center flex-col"
-            >
-              <p class="bg-[#00b5ad] rounded-tr-md py-[4px] text-[white]">
-                Trạng thái
-              </p>
+            <div class="card card-left rounded-r-md min-w-[100px] text-center flex-col">
+              <p class="bg-[#00b5ad] rounded-tr-md py-[4px] text-[white]">Trạng thái</p>
               <p class="flex-grow py-[1.5em]">
-                {{ voucher.isActive ? "Đang áp dụng" : "Không áp dụng" }}
+                {{ voucher.isActive ? 'Đang áp dụng' : 'Không áp dụng' }}
               </p>
             </div>
           </div>
@@ -80,27 +50,27 @@
   </div>
 </template>
 <script>
-import { getVoucher } from "../../apis/voucher";
+import { getVoucher } from '../../apis/voucher'
 export default {
+  name: 'VoucherList',
   data() {
     return {
-      listVoucher: [],
-    };
+      listVoucher: []
+    }
   },
-  name: "VoucherList",
 
   async mounted() {
-    const dataVoucher = await getVoucher();
-    this.listVoucher = dataVoucher.data.data.records;
-    console.log(dataVoucher.data.data.records);
+    const dataVoucher = await getVoucher()
+    this.listVoucher = dataVoucher.data.data.records
+    console.log(dataVoucher.data.data.records)
   },
   methods: {
     onClickVoucher(id) {
-      console.log(id);
-      this.$router.push(`/voucher/edit/${id}`);
-    },
-  },
-};
+      console.log(id)
+      this.$router.push(`/voucher/edit/${id}`)
+    }
+  }
+}
 </script>
 <style lang="scss">
 $red: #e84c3d;
@@ -123,7 +93,7 @@ $blue: #2185d0;
   border-left: 0.18em dashed #fff;
   &:before,
   &:after {
-    content: "";
+    content: '';
     position: absolute;
     display: block;
     width: 0.9em;
