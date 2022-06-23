@@ -12,3 +12,7 @@ export const HTTP_STATUS = {
 export const LIMITS = [20, 50, 100, 200]
 
 export const NUMBER_PATTERN = /^[0-9]*$/
+export const TypeVoucher = {
+  Percent: 0,
+  Cash: 1
+}

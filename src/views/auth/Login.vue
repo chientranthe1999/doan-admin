@@ -46,7 +46,6 @@ export default {
 
   methods: {
     async login() {
-      console.log('hihi')
       try {
         this.loading = true
         const isValid = await this.$refs.form.validate()

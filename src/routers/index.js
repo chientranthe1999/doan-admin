@@ -100,6 +100,12 @@ const allRoutes = [
         name: 'VoucherAdd',
         component: () => import('@/views/voucher/Add'),
         meta: { title: 'Thêm voucher mới' }
+      },
+      {
+        path: 'edit/:id',
+        name: 'EditVoucher',
+        component: () => import('@/views/voucher/Edit'),
+        meta: { title: 'Chỉnh sửa voucher' }
       }
     ]
   },
