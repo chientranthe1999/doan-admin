@@ -89,19 +89,21 @@ const allRoutes = [
       },
       {
         path: 'list/type',
-        name: 'ArticleAddType',
+        name: 'ArticleTypeList',
         component: () => import('@/views/article/Add-type'),
         meta: { title: 'Danh sách thể loại bài viết' }
       },
       {
         path: 'type/edit/:id',
-        name: 'ArticleAddType',
+        name: 'ArticleTypeEdit',
+        hidden: true,
         component: () => import('@/views/article/Edit'),
         meta: { title: 'Chỉnh sửa thể loại bài viết' }
       },
       {
         path: 'edit/:id',
         name: 'EditArticle',
+        hidden: true,
         component: () => import('@/views/article/Edit'),
         meta: { title: 'Chỉnh sửa bài viết' }
       }
@@ -128,6 +130,7 @@ const allRoutes = [
       {
         path: 'edit/:id',
         name: 'EditVoucher',
+        hidden: true,
         component: () => import('@/views/voucher/Edit'),
         meta: { title: 'Chỉnh sửa voucher' }
       }
@@ -158,6 +161,12 @@ const allRoutes = [
     path: '/login',
     component: () => import('@/views/auth/Login'),
     meta: { title: 'Đăng nhập' },
+    hidden: true
+  },
+
+  {
+    path: '*',
+    redirect: '/manage',
     hidden: true
   }
 ]

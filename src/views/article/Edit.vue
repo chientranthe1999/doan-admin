@@ -5,13 +5,7 @@
       <div class="bg-[white] rounded-md p-[0.5em] box-shadow-1">
         <el-form :model="form" :rules="rules">
           <el-form-item label="Tiêu đề bài viết" prop="title">
-            <el-input
-              v-model="form.title"
-              class="w-100"
-              maxlength="200"
-              show-word-limit
-              placeholder="Tiêu đề"
-            />
+            <el-input v-model="form.title" class="w-100" maxlength="200" show-word-limit placeholder="Tiêu đề" />
           </el-form-item>
           <el-form-item label="Chọn loại bài viết">
             <el-select
@@ -21,12 +15,7 @@
               placeholder="Chọn loại bài viết"
               @change="onChangeType"
             >
-              <el-option
-                v-for="item in typeArticles"
-                :key="item.id"
-                :label="item.title"
-                :value="item"
-              />
+              <el-option v-for="item in typeArticles" :key="item.id" :label="item.title" :value="item" />
             </el-select>
           </el-form-item>
           <el-form-item label="Trạng thái">
@@ -36,13 +25,7 @@
             </el-radio-group>
           </el-form-item>
           <el-form-item label="Tóm tắt nội dung" prop="title">
-            <el-input
-              v-model="form.description"
-              class="w-100"
-              maxlength="200"
-              show-word-limit
-              placeholder="Tiêu đề"
-            />
+            <el-input v-model="form.description" class="w-100" maxlength="200" show-word-limit placeholder="Tiêu đề" />
           </el-form-item>
         </el-form>
 
@@ -61,33 +44,20 @@
             :auto-upload="false"
           >
             <el-button size="small" type="primary">Click to upload</el-button>
-            <div slot="tip" class="el-upload__tip">
-              jpg/png files with a size less than 500kb
-            </div>
+            <div slot="tip" class="el-upload__tip">jpg/png files with a size less than 500kb</div>
           </el-upload>
         </div>
 
         <div class="text-right mt-1-em">
-          <el-button
-            class="btn--orange btn"
-            icon="el-icon-circle-close"
-          >Cancel</el-button>
-          <el-button
-            class="btn--green btn"
-            icon="el-icon-circle-check"
-            @click="onSubmit"
-          >Save</el-button>
+          <el-button class="btn--orange btn" icon="el-icon-circle-close">Cancel</el-button>
+          <el-button class="btn--green btn" icon="el-icon-circle-check" @click="onSubmit">Save</el-button>
         </div>
       </div>
     </div>
   </div>
 </template>
 <script>
-import {
-  getTypeArticle,
-  editArticle,
-  getArticleById
-} from '../../apis/article'
+import { getTypeArticle, editArticle, getArticleById } from '../../apis/article'
 export default {
   data() {
     return {
@@ -121,7 +91,6 @@ export default {
   },
   async created() {
     const article = await getArticleById(this.$route.params.id)
-    console.log(article)
 
     this.form.title = article.data.data.title
     this.form.description = article.data.data.title
@@ -131,7 +100,6 @@ export default {
   },
   async mounted() {
     this.typeArticles = await (await getTypeArticle()).data.data
-    console.log(this.typeArticles)
   },
   methods: {
     onChangeType(typeArticle) {

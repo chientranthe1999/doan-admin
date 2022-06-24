@@ -43,7 +43,7 @@
       :page-size="limit"
       :current-page="page"
       layout="prev, pager, next"
-      class="mt-1-em"
+      class="py-[1em]"
       @current-change="changePage"
     />
   </div>

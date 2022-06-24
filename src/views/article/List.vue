@@ -112,7 +112,6 @@ export default {
   },
   async created() {
     const a = await getArticleByUser()
-    console.log(a)
   }
 }
 </script>

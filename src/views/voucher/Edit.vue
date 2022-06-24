@@ -124,7 +124,6 @@ export default {
       this.selectPlace = place
     },
     async onSubmitCreateVoucher() {
-      console.log(moment(new Date(this.endDate)).format('YYYY/MM/DD'))
       const voucherBody = {
         maxMoneySale: this.maxMoneySale,
         moneyCondition: this.moneyCondition,

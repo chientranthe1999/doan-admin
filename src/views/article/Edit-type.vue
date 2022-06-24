@@ -5,13 +5,7 @@
       <div class="bg-[white] rounded-md p-[0.5em] box-shadow-1">
         <el-form :model="form" :rules="rules">
           <el-form-item label="Tiêu đề bài viết" prop="title">
-            <el-input
-              v-model="form.title"
-              class="w-100"
-              maxlength="200"
-              show-word-limit
-              placeholder="Tiêu đề"
-            />
+            <el-input v-model="form.title" class="w-100" maxlength="200" show-word-limit placeholder="Tiêu đề" />
           </el-form-item>
         </el-form>
 
@@ -31,22 +25,13 @@
             :limit="1"
           >
             <el-button size="small" type="primary">Click to upload</el-button>
-            <div slot="tip" class="el-upload__tip">
-              jpg/png files with a size less than 500kb
-            </div>
+            <div slot="tip" class="el-upload__tip">jpg/png files with a size less than 500kb</div>
           </el-upload>
         </div>
 
         <div class="text-right mt-1-em">
-          <el-button
-            class="btn--orange btn"
-            icon="el-icon-circle-close"
-          >Cancel</el-button>
-          <el-button
-            class="btn--green btn"
-            icon="el-icon-circle-check"
-            @click="onSumit"
-          >Save</el-button>
+          <el-button class="btn--orange btn" icon="el-icon-circle-close">Cancel</el-button>
+          <el-button class="btn--green btn" icon="el-icon-circle-check" @click="onSumit">Save</el-button>
         </div>
       </div>
     </div>
@@ -84,7 +69,6 @@ export default {
   },
   async mounted() {
     this.typeArticles = await (await getTypeArticle()).data.data
-    console.log(this.typeArticles)
   },
   methods: {
     onChangeType(typeArticle) {
