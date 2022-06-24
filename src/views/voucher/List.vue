@@ -62,11 +62,9 @@ export default {
   async mounted() {
     const dataVoucher = await getVoucher()
     this.listVoucher = dataVoucher.data.data.records
-    console.log(dataVoucher.data.data.records)
   },
   methods: {
     onClickVoucher(id) {
-      console.log(id)
       this.$router.push(`/voucher/edit/${id}`)
     }
   }

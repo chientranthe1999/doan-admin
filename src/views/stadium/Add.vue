@@ -198,9 +198,6 @@ export default {
       }
     }
   },
-  mounted() {
-    console.log('ChienTT')
-  },
 
   methods: {
     handleRemove(file, fileList) {

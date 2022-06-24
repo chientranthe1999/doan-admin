@@ -18,6 +18,12 @@
               <el-option v-for="item in typeArticles" :key="item.id" :label="item.title" :value="item" />
             </el-select>
           </el-form-item>
+          <el-form-item label="Trạng thái">
+            <el-radio-group v-model="form.isActive">
+              <el-radio :label="1">Active</el-radio>
+              <el-radio :label="0">Disable</el-radio>
+            </el-radio-group>
+          </el-form-item>
           <el-form-item label="Tóm tắt nội dung" prop="title">
             <el-input v-model="form.description" class="w-100" maxlength="200" show-word-limit placeholder="Tiêu đề" />
           </el-form-item>
@@ -51,7 +57,7 @@
   </div>
 </template>
 <script>
-import { getTypeArticle, creaetArticle } from '../../apis/article'
+import { getTypeArticle, editArticle, getArticleById } from '../../apis/article'
 export default {
   data() {
     return {
@@ -63,7 +69,7 @@ export default {
         title: '',
         typeArticle: {},
         image: '',
-        description: ''
+        isActive: 0
       },
       rules: {
         title: [
@@ -83,6 +89,15 @@ export default {
       }
     }
   },
+  async created() {
+    const article = await getArticleById(this.$route.params.id)
+
+    this.form.title = article.data.data.title
+    this.form.description = article.data.data.title
+    this.form.typeArticle = article.data.data.typeArticle
+    this.form.content = article.data.data.content
+    this.form.isActive = article.data.data.isActive
+  },
   async mounted() {
     this.typeArticles = await (await getTypeArticle()).data.data
   },
@@ -91,8 +106,8 @@ export default {
       this.form.typeArticle = typeArticle
     },
     async onSubmit() {
-      await creaetArticle(this.form)
-      this.$vmess.success('Tạo  bài viết thành công')
+      await editArticle(this.$route.params.id, this.form)
+      this.$vmess.success('Chỉnh sửa thành công')
       this.$router.push('/article')
     },
     handleUploadSuccess(e) {

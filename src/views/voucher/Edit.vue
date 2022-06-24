@@ -55,7 +55,7 @@
               </el-radio-group>
             </el-form-item>
             <el-form-item label="Ngày Hết Hạn">
-              <el-date-picker v-model="endDate" type="dates" :placeholder="endDate" />
+              <el-date-picker v-model="endDate" type="dates" />
               {{ endDate }}
             </el-form-item>
 
@@ -113,7 +113,7 @@ export default {
     this.type = type === 0 ? '%' : 'VND'
     this.amount = amount
     this.isActive = isActive
-    this.endDate = endDate
+    // this.endDate = endDate
   },
 
   async mounted() {
@@ -124,7 +124,6 @@ export default {
       this.selectPlace = place
     },
     async onSubmitCreateVoucher() {
-      console.log(moment(new Date(this.endDate)).format('YYYY/MM/DD'))
       const voucherBody = {
         maxMoneySale: this.maxMoneySale,
         moneyCondition: this.moneyCondition,
