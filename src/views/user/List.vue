@@ -7,7 +7,6 @@
       title-text="Quản lý chủ sân"
       @buttonClick="$router.push({ name: 'UserAdd' })"
     />
-
     <div class="content-main-container">
       <div class="bg-white">
         <v-table :table-data="results" :columns="cols" :limit="limit" :page="page" :total="total">
@@ -27,20 +26,17 @@
   </div>
 </template>
 <script>
+import { getOwnerPlaces } from '../../apis/owner-place'
 export default {
   data() {
     return {
+      listUser: [],
       loading: false,
       isOpen: false,
       total: 1,
       page: 1,
       limit: 20,
       results: [
-        {
-          name: 'Thắng Dp',
-          phone: '12345678',
-          status: 'Active'
-        }
       ],
 
       cols: [
@@ -76,6 +72,10 @@ export default {
         }
       ]
     }
+  },
+  async mounted() {
+    const ownerPlace = await getOwnerPlaces()
+    this.results = ownerPlace.data.data.records
   }
 }
 </script>

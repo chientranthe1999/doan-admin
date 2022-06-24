@@ -80,6 +80,30 @@ const allRoutes = [
         name: 'ArticleAdd',
         component: () => import('@/views/article/Add'),
         meta: { title: 'Thêm bài mới' }
+      },
+      {
+        path: 'type',
+        name: 'ArticleAddType',
+        component: () => import('@/views/article/Add-type'),
+        meta: { title: 'Thêm thể loại bài viết' }
+      },
+      {
+        path: 'list/type',
+        name: 'ArticleAddType',
+        component: () => import('@/views/article/Add-type'),
+        meta: { title: 'Danh sách thể loại bài viết' }
+      },
+      {
+        path: 'type/edit/:id',
+        name: 'ArticleAddType',
+        component: () => import('@/views/article/Edit'),
+        meta: { title: 'Chỉnh sửa thể loại bài viết' }
+      },
+      {
+        path: 'edit/:id',
+        name: 'EditArticle',
+        component: () => import('@/views/article/Edit'),
+        meta: { title: 'Chỉnh sửa bài viết' }
       }
     ]
   },

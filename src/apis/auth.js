@@ -7,3 +7,7 @@ export function login(data) {
 export function getInfor() {
   return request.get('/auth/me')
 }
+
+export function register(data) {
+  return request.post('/auth/register', data)
+}
