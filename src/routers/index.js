@@ -27,6 +27,12 @@ const allRoutes = [
         name: 'BookingList',
         component: () => import('@/views/manage/Booking'),
         meta: { title: 'Quản lý đơn hàng' }
+      },
+      {
+        path: 'charge',
+        name: 'ChargeList',
+        component: () => import('@/views/manage/Charge'),
+        meta: { title: 'Quản lý nạp thẻ' }
       }
     ]
   },
