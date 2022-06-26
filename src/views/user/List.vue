@@ -31,7 +31,7 @@
           <template #action="{ row }">
             <div class="text-center">
               <el-button v-if="row.approved" type="danger" icon="el-icon-minus" circle />
-              <el-button v-else type="primary" icon="el-icon-check" circle />
+              <el-button v-else type="primary" icon="el-icon-check" circle @click="activeAdmin(row.id)" />
               <el-button type="success" icon="el-icon-edit" circle />
             </div>
           </template>
@@ -42,6 +42,7 @@
 </template>
 <script>
 import { getOwnerPlaces } from '@/apis/owner-place'
+import { activeAdmin } from '@/apis/auth'
 export default {
   data() {
     return {
@@ -112,6 +113,11 @@ export default {
       } finally {
         this.loading = false
       }
+    },
+
+    async activeAdmin(id) {
+      const res = await activeAdmin(id)
+      console.log(res)
     }
   }
 }

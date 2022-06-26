@@ -1,13 +1,5 @@
 import request from '@/utils/request'
 
-export function login(data) {
-  return request.post('/owner/place', data)
-}
-
-export function getInfor(data) {
-  return request.get('/auth/me', data)
-}
-
 export function createPlaceType(data) {
   return request.post('/place/type-place', data)
 }
@@ -24,6 +16,18 @@ export function createTimeGole(data) {
   return request.post('/owner/place/time-gold', data)
 }
 
-export function getPlaceOwner() {
-  return request.get('/owner/place?page=1&pageSize=10')
+export function getPlaceOwner(params) {
+  return request.get('/owner/place', { params })
+}
+
+export function getPlaceById(id) {
+  return request.get('/place/' + id)
+}
+
+export function createPlace(data) {
+  return request.post('/owner/place', data)
+}
+
+export function updatePlace(id, data) {
+  return request.put('/owner/place/' + id, data)
 }
