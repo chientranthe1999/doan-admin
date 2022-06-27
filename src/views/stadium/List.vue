@@ -10,28 +10,23 @@
     <main class="content-main-container">
       <!-- Result data -->
       <section>
-        <div class="d-flex align-items-center mb-[1em]">
-          <v-limiter @handleChange="limitChange" />
-        </div>
         <div class="box-shadow-bordered pd-1-em bordered-5">
-          <template v-if="results.length > 0">
+          <template v-if="results.length">
             <div class="mb-1-em text-right" />
-            <v-table
-              :table-data="results"
-              :columns="cols"
-              :limit="limit"
-              :page="page"
-              :total="total"
-              col-type="selection"
-            >
+            <v-table :table-data="results" :columns="cols" :limit="limit" :page="page" :total="total">
               <!-- @handleSelectionChange="handleSelectionChange" -->
               <template slot="shared_code" slot-scope="{ row }">
                 <div v-for="code in row.shared_code" :key="`${code}-share-code`">{{ code }}</div>
               </template>
 
-              <template slot="action">
+              <template #action="{ row }">
                 <div class="text-center">
-                  <el-button type="success" icon="el-icon-edit" circle />
+                  <el-button
+                    type="success"
+                    icon="el-icon-edit"
+                    circle
+                    @click="$router.push({ name: 'StadiumEdit', params: { id: row.id } })"
+                  />
                   <el-button type="primary" icon="el-icon-right" circle />
                 </div>
               </template>
@@ -46,75 +41,68 @@
 </template>
 
 <script>
-import { HTTP_STATUS } from '@/utils/constants.js'
+import { getPlaceOwner } from '@/apis/place'
 
 export default {
   name: 'StadiumList',
   data() {
     return {
-      filters: {
-        car_id: undefined,
-        keywords: undefined
-      },
-      selectedItems: [],
       loading: false,
-      results: [],
+      total: 1,
+      page: 1,
+      limit: 20,
+      results: [
+        {
+          name: 'ChienTT'
+        }
+      ],
 
       cols: [
         {
-          prop: 'code',
-          label: this.$t('label.code'),
-          minWidth: '120'
-        },
-        {
-          prop: 'shared_code',
-          label: this.$t('label.shared_code'),
-          minWidth: '120'
-        },
-        {
           prop: 'name',
-          label: this.$t('label.name'),
-          minWidth: '220'
-        },
-        {
-          prop: 'en_name',
-          label: this.$t('label.en_name'),
-          minWidth: '220'
-        },
-        {
-          prop: 'name_code',
-          label: this.$t('label.code_name'),
+          label: 'Tên sân',
           minWidth: '120'
         },
         {
-          prop: 'car',
-          label: this.$t('label.car'),
+          prop: 'address',
+          label: 'Địa chỉ',
           minWidth: '120'
         },
         {
-          prop: 'provider',
-          label: this.$t('label.provider'),
-          minWidth: '220'
+          prop: 'timeOpen',
+          label: 'Giờ mở cửa',
+          minWidth: '120'
+        },
+        {
+          prop: 'timeClose',
+          label: 'Giờ đóng cửa',
+          minWidth: '120'
         },
         {
           prop: 'action',
-          label: this.$t('label.action'),
-          minWidth: '120',
-          fixed: 'right'
+          label: 'Action',
+          minWidth: '80'
         }
       ]
     }
   },
-  computed: {
-    currentItems() {
-      if (this.total === 0 || !this.results.length) return 0
-      return this.total > (this.page + 1) * this.limit
-        ? `${(this.page - 1) * this.limit + 1} - ${(this.page + 1) * this.limit}`
-        : `${(this.page - 1) * this.limit + 1} - ${this.total}`
-    },
 
-    disabledPrintButton() {
-      return this.selectedItems.length === 0
+  async created() {
+    await this.getPlace()
+  },
+
+  methods: {
+    async getPlace() {
+      try {
+        const res = await getPlaceOwner({
+          page: this.page,
+          pageSize: this.limit
+        })
+        this.results = res.data.data.records
+        this.total = res.data.total
+      } catch (error) {
+        console.log(error)
+      }
     }
   }
 }

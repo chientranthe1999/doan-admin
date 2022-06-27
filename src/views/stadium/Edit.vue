@@ -1,6 +1,6 @@
 <template lang="html">
   <div v-loading="loading">
-    <v-header title-text="Thêm sân mới" title-icon="stadium" />
+    <v-header title-text="Chỉnh sửa sân" title-icon="stadium" />
     <main class="content-main-container">
       <!-- main form -->
       <section class="bordered-5 bg--gray pd-1-em">
@@ -184,7 +184,7 @@
         </el-form>
         <div class="text-right mt-1-em">
           <el-button class="btn--orange btn" icon="el-icon-circle-close">Cancel</el-button>
-          <el-button class="btn--green btn" icon="el-icon-circle-check" @click="createPlace">Save</el-button>
+          <el-button class="btn--green btn" icon="el-icon-circle-check" @click="updatePlace">Save</el-button>
         </div>
       </section>
     </main>
@@ -205,7 +205,7 @@
 </template>
 
 <script>
-import { getPlaceType, createPlace } from '@/apis/place'
+import { getPlaceType, getPlaceById, updatePlace } from '@/apis/place'
 export default {
   data() {
     return {
@@ -249,26 +249,21 @@ export default {
 
   async created() {
     await this.getPlaceType()
+    await this.getPlaceById()
   },
 
   methods: {
-    async createPlace() {
+    async getPlaceById() {
       try {
-        const sendData = {
-          ...this.form,
-          typePlace: {
-            id: this.form.typePlace
-          },
-          services: this.form.services.map((item) => {
-            return {
-              ...item,
-              image: ''
-            }
-          })
-        }
-        await createPlace(sendData)
-        this.$vmess.success('Thêm sân mới thành công')
-        this.$router.push('/stadium')
+        const res = await getPlaceById(this.$route.params.id)
+        this.form = res.data.data
+        this.form.typePlace = res.data.data.typePlace.id
+        this.fileList = res.data.data.imageDetails.map((item) => {
+          return {
+            url: item
+          }
+        })
+        console.log(res)
       } catch (error) {
         this.$vmess.error(error.response.data.message)
       }
@@ -289,6 +284,27 @@ export default {
     async getPlaceType() {
       const res = await getPlaceType()
       this.type = res.data.data
+    },
+
+    async updatePlace() {
+      try {
+        const sendData = {
+          ...this.form,
+          typePlace: {
+            id: this.form.typePlace
+          },
+          services: this.form.services.map((item) => {
+            return {
+              ...item,
+              image: ''
+            }
+          })
+        }
+
+        const res = await updatePlace(this.$route.params.id, sendData)
+      } catch (e) {
+        this.$vmess.error(e.response.data.message)
+      }
     },
 
     handleUploadSuccess(e) {

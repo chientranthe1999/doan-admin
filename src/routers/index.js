@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import AmdinLayout from '@/layout/AdminLayout'
+import { ROLES } from '@/utils/constants'
 
 Vue.use(VueRouter)
 
@@ -52,6 +53,13 @@ const allRoutes = [
         name: 'StadiumAdd',
         component: () => import('@/views/stadium/Add'),
         meta: { title: 'Thêm sân mới' }
+      },
+      {
+        path: 'edit/:id',
+        name: 'StadiumEdit',
+        component: () => import('@/views/stadium/Edit'),
+        meta: { title: 'Chỉnh sửa sân' },
+        hidden: true
       }
     ]
   },
@@ -91,20 +99,20 @@ const allRoutes = [
         path: 'type',
         name: 'ArticleAddType',
         component: () => import('@/views/article/Add-type'),
-        meta: { title: 'Thêm thể loại bài viết' }
+        meta: { title: 'Thêm thể loại bài viết', roles: [ROLES.SUPER_ADMIN] }
       },
       {
         path: 'list/type',
         name: 'ArticleTypeList',
         component: () => import('@/views/article/Add-type'),
-        meta: { title: 'Danh sách thể loại bài viết' }
+        meta: { title: 'Danh sách thể loại bài viết', roles: [ROLES.SUPER_ADMIN] }
       },
       {
         path: 'type/edit/:id',
         name: 'ArticleTypeEdit',
         hidden: true,
         component: () => import('@/views/article/Edit'),
-        meta: { title: 'Chỉnh sửa thể loại bài viết' }
+        meta: { title: 'Chỉnh sửa thể loại bài viết', roles: [ROLES.SUPER_ADMIN] }
       },
       {
         path: 'edit/:id',
@@ -119,7 +127,7 @@ const allRoutes = [
   {
     path: '/voucher',
     component: AmdinLayout,
-    meta: { title: 'Voucher', icon: 'el-icon-s-ticket' },
+    meta: { title: 'Voucher', icon: 'el-icon-s-ticket', roles: [ROLES.SUPER_ADMIN] },
     children: [
       {
         path: '',
@@ -146,7 +154,7 @@ const allRoutes = [
   {
     path: '/user',
     component: AmdinLayout,
-    meta: { title: 'Quản lý chủ sân', icon: 'el-icon-s-custom' },
+    meta: { title: 'Quản lý chủ sân', icon: 'el-icon-s-custom', roles: [ROLES.SUPER_ADMIN] },
     children: [
       {
         path: '',

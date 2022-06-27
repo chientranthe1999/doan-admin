@@ -10,7 +10,7 @@
 
     <main class="content-main-container">
       <el-row :gutter="12" class="box-shadow-1 rounded-sm py-[1rem] min-h-[80vh]">
-        <el-col v-for="voucher in listVoucher" :key="voucher.id" :xs="24" :sm="12" :md="12" :lg="6">
+        <el-col v-for="voucher in listVoucher" :key="voucher.id" :xs="24" :sm="12" :md="12" :lg="12">
           <div
             class="flex mx-auto w-fit mb-[1.5em] cursor-pointer hover:opacity-70"
             @click="onClickVoucher(voucher.id)"

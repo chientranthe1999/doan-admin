@@ -11,3 +11,7 @@ export function getInfor() {
 export function register(data) {
   return request.post('/auth/register', data)
 }
+
+export function activeAdmin(id) {
+  return request.post('/owner-place/approve/' + id)
+}
