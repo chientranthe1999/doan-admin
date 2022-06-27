@@ -8,3 +8,11 @@ export function getAdminDashBoad(params) {
 export function getOwnerDashBoad(params) {
   return request.get('/owner/dash-board', { params })
 }
+
+export function getSystemctlConfig() {
+  return request.get('admin/system-config')
+}
+
+export function editSystemConfig(data) {
+  return request.put('admin/system-config', data)
+}
