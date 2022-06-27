@@ -30,7 +30,7 @@
           </template>
           <template #action="{ row }">
             <div class="text-center">
-              <el-button v-if="row.approved" type="danger" icon="el-icon-minus" circle />
+              <el-button v-if="row.approved" type="danger" icon="el-icon-minus" circle @click="disableAdmin(row.id)" />
               <el-button v-else type="primary" icon="el-icon-check" circle @click="activeAdmin(row.id)" />
               <el-button type="success" icon="el-icon-edit" circle />
             </div>
@@ -42,7 +42,7 @@
 </template>
 <script>
 import { getOwnerPlaces } from '@/apis/owner-place'
-import { activeAdmin } from '@/apis/auth'
+import { activeAdmin, disableAdmin } from '@/apis/auth'
 export default {
   data() {
     return {
@@ -116,8 +116,23 @@ export default {
     },
 
     async activeAdmin(id) {
-      const res = await activeAdmin(id)
-      console.log(res)
+      try {
+        const res = await activeAdmin(id)
+        this.$vmess.success('Kích hoạt thành công')
+        await this.getUserList()
+      } catch (e) {
+        this.$vmess.error('Đã có lỗi xảy ra. Vui lòng thử lại')
+      }
+    },
+
+    async disableAdmin(id) {
+      try {
+        const res = await disableAdmin(id)
+        this.$vmess.success('Hủy kích hoạt thành công')
+        await this.getUserList()
+      } catch (e) {
+        this.$vmess.error('Đã có lỗi xảy ra. Vui lòng thử lại')
+      }
     }
   }
 }

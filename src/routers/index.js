@@ -52,7 +52,13 @@ const allRoutes = [
         path: '',
         name: 'StadiumList',
         component: () => import('@/views/stadium/List'),
-        meta: { title: 'Sân vận động' }
+        meta: { title: 'Sân vận động', roles: [ROLES.ADMIN] }
+      },
+      {
+        path: '/admin',
+        name: 'StadiumAdminList',
+        component: () => import('@/views/stadium/AdminList'),
+        meta: { title: 'Sân vận động', roles: [ROLES.SUPER_ADMIN] }
       },
       {
         path: 'add',
@@ -104,20 +110,20 @@ const allRoutes = [
       {
         path: 'type',
         name: 'ArticleAddType',
-        component: () => import('@/views/article/Add-type'),
+        component: () => import('@/views/article/AddType'),
         meta: { title: 'Thêm thể loại bài viết', roles: [ROLES.SUPER_ADMIN] }
       },
       {
         path: 'list/type',
         name: 'ArticleTypeList',
-        component: () => import('@/views/article/Add-type'),
+        component: () => import('@/views/article/ListType'),
         meta: { title: 'Danh sách thể loại bài viết', roles: [ROLES.SUPER_ADMIN] }
       },
       {
         path: 'type/edit/:id',
         name: 'ArticleTypeEdit',
         hidden: true,
-        component: () => import('@/views/article/Edit'),
+        component: () => import('@/views/article/EditType'),
         meta: { title: 'Chỉnh sửa thể loại bài viết', roles: [ROLES.SUPER_ADMIN] }
       },
       {

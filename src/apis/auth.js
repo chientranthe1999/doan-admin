@@ -13,5 +13,9 @@ export function register(data) {
 }
 
 export function activeAdmin(id) {
-  return request.post('/owner-place/approve/' + id)
+  return request.put('/auth/owner-place/approve/' + id)
+}
+
+export function disableAdmin(id) {
+  return request.put('/auth/owner-place/disable/' + id)
 }

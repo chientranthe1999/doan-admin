@@ -288,17 +288,39 @@ export default {
 
     async updatePlace() {
       try {
+        const {
+          name,
+          address,
+          timeOpen,
+          description,
+          timeClose,
+          timeDistance,
+
+          imageDetails,
+          limitUsers,
+          timeGold
+        } = this.form
+
         const sendData = {
-          ...this.form,
-          typePlace: {
-            id: this.form.typePlace
-          },
-          services: this.form.services.map((item) => {
-            return {
-              ...item,
-              image: ''
-            }
-          })
+          name,
+          address,
+          timeOpen,
+          description,
+          timeClose,
+          timeDistance,
+
+          imageDetails,
+          limitUsers
+          // timeGold,
+          // typePlace: {
+          //   id: this.form.typePlace
+          // },
+          // services: this.form.services.map((item) => {
+          //   return {
+          //     ...item,
+          //     image: ''
+          //   }
+          // })
         }
 
         const res = await updatePlace(this.$route.params.id, sendData)

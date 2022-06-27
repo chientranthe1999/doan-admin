@@ -7,10 +7,10 @@
       range-separator="To"
       start-placeholder="Start date"
       end-placeholder="End date"
-      :size="size"
     />
     <el-button class="btn--green btn ml-[1em]" icon="el-icon-circle-check" @click="onSearch">Tìm kiếm</el-button>
-    <el-row :gutter="24">
+
+    <el-row :gutter="24" class="mt-[2em]">
       <el-col :xs="12" :sm="12" :md="8" class="mb-[1em]">
         <div class="flex box-shadow-1 rounded-md w-fit px-[16px] py-[0.5rem] w-full">
           <v-icon icon-class="cart" class="text-[80px] mr-[8px]" />
@@ -46,7 +46,7 @@
         </div>
       </el-col>
 
-       <el-col :xs="12" :sm="12" :md="8" class="mb-[1em]">
+      <el-col :xs="12" :sm="12" :md="8" class="mb-[1em]">
         <div class="flex box-shadow-1 rounded-md w-fit px-[16px] py-[0.5rem] w-full">
           <v-icon icon-class="debt" class="text-[80px] mr-[8px]" />
           <div class="overflow-hidden flex-1 text-center">
@@ -57,7 +57,7 @@
           </div>
         </div>
       </el-col>
-        <el-col :xs="12" :sm="12" :md="8" class="mb-[1em]">
+      <el-col :xs="12" :sm="12" :md="8" class="mb-[1em]">
         <div class="flex box-shadow-1 rounded-md w-fit px-[16px] py-[0.5rem] w-full">
           <v-icon icon-class="debt" class="text-[80px] mr-[8px]" />
           <div class="overflow-hidden flex-1 text-center">
@@ -81,24 +81,23 @@
         </div>
       </el-col>
     </el-row>
-    <el-form
-      :label-position="labelPosition"
-      label-width="150px"
-      :model="form"
-      style="max-width: 460px"
-    >
+    <el-form label-width="150px" :model="form" style="max-width: 460px">
       <el-form-item label="GasFree">
         <el-input v-model="form.gasFee" />
       </el-form-item>
       <el-form-item label="Ngày trả thưởng">
-        <el-input  v-model="form.dateRefundMoney" />
+        <el-input v-model="form.dateRefundMoney" />
       </el-form-item>
-      <el-button class="btn--green btn ml-[1em]" icon="el-icon-circle-check" @click="onEditSystem">Thay Đổi</el-button>
+      <div class="text-right">
+        <el-button class="btn--green btn ml-[1em]" icon="el-icon-circle-check" @click="onEditSystem">
+          Thay Đổi
+        </el-button>
+      </div>
     </el-form>
   </div>
 </template>
 <script>
-import { getAdminDashBoad, getSystemctlConfig, editSystemConfig } from '../../apis/dashboad'
+import { getAdminDashBoad, getSystemctlConfig, editSystemConfig } from '@/apis/dashboad'
 import moment from 'moment'
 export default {
   data() {
@@ -128,10 +127,8 @@ export default {
     this.numberPlaceAtive = res.data.numberPlaceAtive
     this.gasFee = res.data.gasFee
     const systemConfig = await getSystemctlConfig()
-    console.log(systemConfig)
     this.form.gasFee = systemConfig.data.gasFee
     this.form.dateRefundMoney = systemConfig.data.dateRefundMoney
-    console.log(this.form)
   },
   methods: {
     async onSearch() {
@@ -144,13 +141,12 @@ export default {
       this.numberPlaceAtive = res.data.numberPlaceAtive
       this.gasFee = res.data.gasFee
     },
-    async onEditSystem() {
-    console.log(126)
-    const res = await editSystemConfig(this.form)
-    this.$vmess.success('Edit thanh cong')
-  }
-  }
 
+    async onEditSystem() {
+      await editSystemConfig(this.form)
+      this.$vmess.success('Edit thanh cong')
+    }
+  }
 }
 </script>
 <style lang=""></style>

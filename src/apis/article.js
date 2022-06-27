@@ -4,6 +4,10 @@ export function getTypeArticle() {
   return request.get('/article/type-article')
 }
 
+export function getAllArticle(params) {
+  return request.get('/article', { params })
+}
+
 export function creaetArticleType(data) {
   return request.post('/article/type-article', data)
 }

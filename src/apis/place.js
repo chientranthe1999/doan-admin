@@ -19,6 +19,9 @@ export function createTimeGole(data) {
 export function getPlaceOwner(params) {
   return request.get('/owner/place', { params })
 }
+export function getAllPlace(params) {
+  return request.get('/place', { params })
+}
 
 export function getPlaceById(id) {
   return request.get('/place/' + id)

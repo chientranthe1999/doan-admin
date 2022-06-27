@@ -1,25 +1,26 @@
 <template lang="html">
   <div v-loading.fullscreen.lock="loading">
-    <v-header
-      :has-button="true"
-      button-text="Thêm mới"
-      title-text="Danh sách sân vận động"
-      title-icon="stadium"
-      @buttonClick="$router.push({ name: 'StadiumAdd' })"
-    />
+    <v-header :has-button="false" button-text="Thêm mới" title-text="Danh sách sân vận động" title-icon="stadium" />
     <main class="content-main-container">
       <!-- Result data -->
       <section>
         <div class="box-shadow-bordered pd-1-em bordered-5">
           <template v-if="results.length">
             <div class="mb-1-em text-right" />
-            <v-table :table-data="results" :columns="cols" :limit="limit" :page="page" :total="total">
+            <v-table
+              :table-data="results"
+              :columns="cols"
+              :limit="limit"
+              :page="page"
+              :total="total"
+              @onChangePage="onChangePage"
+            >
               <!-- @handleSelectionChange="handleSelectionChange" -->
               <template slot="shared_code" slot-scope="{ row }">
                 <div v-for="code in row.shared_code" :key="`${code}-share-code`">{{ code }}</div>
               </template>
 
-              <template #action="{ row }">
+              <!-- <template #action="{ row }">
                 <div class="text-center">
                   <el-button
                     type="success"
@@ -29,7 +30,7 @@
                   />
                   <el-button type="primary" icon="el-icon-right" circle />
                 </div>
-              </template>
+              </template> -->
             </v-table>
           </template>
 
@@ -41,7 +42,7 @@
 </template>
 
 <script>
-import { getPlaceOwner } from '@/apis/place'
+import { getAllPlace } from '@/apis/place'
 
 export default {
   name: 'StadiumList',
@@ -73,11 +74,6 @@ export default {
           prop: 'timeClose',
           label: 'Giờ đóng cửa',
           minWidth: '120'
-        },
-        {
-          prop: 'action',
-          label: 'Action',
-          minWidth: '80'
         }
       ]
     }
@@ -90,7 +86,7 @@ export default {
   methods: {
     async getPlace() {
       try {
-        const res = await getPlaceOwner({
+        const res = await getAllPlace({
           page: this.page,
           pageSize: this.limit
         })

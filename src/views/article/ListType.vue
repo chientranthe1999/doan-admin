@@ -3,10 +3,10 @@
     <v-header
       :has-button="true"
       button-text="Thêm mới"
-      title-text="Danh sách bài viết"
-      title-icon="stadium"
-      @buttonClick="$router.push({ name: 'ArticleAdd' })"
+      title-text="Danh sách loại bài viết"
+      @buttonClick="$router.push({ name: 'ArticleAddType' })"
     />
+    <!-- title-icon="stadium" -->
     <main class="content-main-container">
       <!-- Result data -->
       <section>
@@ -20,7 +20,7 @@
                     type="success"
                     icon="el-icon-edit"
                     circle
-                    @click="$router.push({ name: 'EditArticle', params: { id: row.id } })"
+                    @click="$router.push({ name: 'ArticleTypeEdit', params: { id: row.id } })"
                   />
                   <!-- <el-button type="primary" icon="el-icon-right" circle /> -->
                 </div>
@@ -29,12 +29,6 @@
               <template #image="{ row }">
                 <div class="p-[8px]">
                   <el-image v-if="row.image" class="w-full mb-4" :src="row.image" lazy fit="cover" />
-                </div>
-              </template>
-
-              <template #type="{ row }">
-                <div class="text-center">
-                  <el-tag class="rounded-full mb-1">{{ row.type }}</el-tag>
                 </div>
               </template>
             </v-table>
@@ -48,7 +42,7 @@
 </template>
 
 <script>
-import { getAllArticle } from '@/apis/article'
+import { getTypeArticle } from '@/apis/article'
 export default {
   name: 'StadiumList',
   data() {
@@ -70,11 +64,7 @@ export default {
           label: 'Ảnh minh họa',
           minWidth: '120'
         },
-        {
-          prop: 'type',
-          label: 'Thể loại',
-          minWidth: '120'
-        },
+
         {
           prop: 'action',
           label: '',
@@ -91,22 +81,23 @@ export default {
   methods: {
     async getNews() {
       try {
-        const res = await getAllArticle({
+        const res = await getTypeArticle({
           page: this.page,
           pageSize: this.limit
         })
-        this.results = res.data.data.records.map((item) => {
-          return {
-            id: item.id,
-            name: item.name,
-            image: item.image,
-            title: item.title,
-            type: item.typeArticle.title
-          }
-        })
 
-        this.total = res.data.data.total
-        console.log(res)
+        // this.results = res.data.data.records.map((item) => {
+        //   return {
+        //     id: item.id,
+        //     name: item.name,
+        //     image: item.image,
+        //     title: item.title,
+        //     type: item.typeArticle.title
+        //   }
+        // })
+
+        // this.total = res.data.data.total
+        this.results = res.data.data
       } catch (e) {
         console.log(e)
       }
