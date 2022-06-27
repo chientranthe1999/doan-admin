@@ -39,7 +39,7 @@ const allRoutes = [
         path: 'charge',
         name: 'ChargeList',
         component: () => import('@/views/manage/Charge'),
-        meta: { title: 'Quản lý nạp thẻ' }
+        meta: { title: 'Quản lý nạp thẻ', roles: [ROLES.SUPER_ADMIN] }
       }
     ]
   },
@@ -58,13 +58,13 @@ const allRoutes = [
         path: 'add',
         name: 'StadiumAdd',
         component: () => import('@/views/stadium/Add'),
-        meta: { title: 'Thêm sân mới' }
+        meta: { title: 'Thêm sân mới', roles: [ROLES.ADMIN] }
       },
       {
         path: 'edit/:id',
         name: 'StadiumEdit',
         component: () => import('@/views/stadium/Edit'),
-        meta: { title: 'Chỉnh sửa sân' },
+        meta: { title: 'Chỉnh sửa sân', roles: [ROLES.ADMIN] },
         hidden: true
       }
     ]
@@ -133,7 +133,7 @@ const allRoutes = [
   {
     path: '/voucher',
     component: AmdinLayout,
-    meta: { title: 'Voucher', icon: 'el-icon-s-ticket', roles: [ROLES.SUPER_ADMIN] },
+    meta: { title: 'Voucher', icon: 'el-icon-s-ticket', roles: [ROLES.ADMIN] },
     children: [
       {
         path: '',
