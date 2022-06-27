@@ -30,6 +30,12 @@ const allRoutes = [
         meta: { title: 'Quản lý đơn hàng' }
       },
       {
+        path: 'booking-list-owner',
+        name: 'BookingList',
+        component: () => import('@/views/manage/BookingOwner'),
+        meta: { title: 'Quản lý đơn hàng của chủ sân' }
+      },
+      {
         path: 'charge',
         name: 'ChargeList',
         component: () => import('@/views/manage/Charge'),
