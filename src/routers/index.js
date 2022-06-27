@@ -66,12 +66,25 @@ const allRoutes = [
         component: () => import('@/views/stadium/Add'),
         meta: { title: 'Thêm sân mới', roles: [ROLES.ADMIN] }
       },
+
       {
         path: 'edit/:id',
         name: 'StadiumEdit',
         component: () => import('@/views/stadium/Edit'),
         meta: { title: 'Chỉnh sửa sân', roles: [ROLES.ADMIN] },
         hidden: true
+      },
+      {
+        path: 'type',
+        name: 'StadiumTypeList',
+        component: () => import('@/views/stadium/ListType'),
+        meta: { title: 'Danh sách loại sân', roles: [ROLES.SUPER_ADMIN] }
+      },
+      {
+        path: 'type/add',
+        name: 'StadiumTypeAdd',
+        component: () => import('@/views/stadium/AddType'),
+        meta: { title: 'Thêm loại sân mới', roles: [ROLES.SUPER_ADMIN] }
       }
     ]
   },

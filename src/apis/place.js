@@ -1,7 +1,7 @@
 import request from '@/utils/request'
 
 export function createPlaceType(data) {
-  return request.post('/place/type-place', data)
+  return request.post('/admin/place/type-place', data)
 }
 
 export function getPlaceType() {

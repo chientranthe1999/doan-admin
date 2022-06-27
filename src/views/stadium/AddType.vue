@@ -1,16 +1,16 @@
 <template lang="html">
   <div>
-    <v-header title-text="Thêm loại bài viết" title-icon="el-icon-notebook-1" />
+    <v-header title-text="Thêm loại sân mới" title-icon="el-icon-notebook-1" />
     <div class="content-main-container">
       <div class="bg-[white] rounded-md p-[0.5em] box-shadow-1">
         <el-form ref="form" :model="form" :rules="rules">
-          <el-form-item label="Loại bài viết" prop="title">
-            <el-input v-model="form.title" class="w-100" maxlength="200" show-word-limit placeholder="Loại bài viết" />
+          <el-form-item label="Loại loại sân" prop="name">
+            <el-input v-model="form.name" class="w-100" maxlength="200" show-word-limit placeholder="Loại sân mới" />
           </el-form-item>
         </el-form>
 
         <div class="mb-1-em">
-          <p class="mb-[1em]">Ảnh loại bài viêt</p>
+          <p class="mb-[1em]">Ảnh loại sân mới</p>
 
           <el-upload
             class="upload-demo"
@@ -36,21 +36,21 @@
   </div>
 </template>
 <script>
-import { creaetArticleType } from '@/apis/article'
+import { createPlaceType } from '@/apis/place'
 export default {
   data() {
     return {
       form: {
-        title: '',
+        name: '',
         image: ''
       },
       fileList: [],
 
       rules: {
-        title: [
+        name: [
           {
             required: true,
-            message: 'Vui lòng nhập tên loại bài viết',
+            message: 'Vui lòng nhập tên loại sân',
             trigger: 'blur'
           }
         ]
@@ -62,9 +62,9 @@ export default {
     async onSumit() {
       try {
         await this.$refs.form.validate()
-        await creaetArticleType(this.form)
-        this.$vmess.success('Tạo thể loại bài viết thành công')
-        this.$router.push('/article')
+        await createPlaceType(this.form)
+        this.$vmess.success('Tạo loại sân thành công')
+        this.$router.push('/stadium')
       } catch (e) {
         console.log(e)
       }

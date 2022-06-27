@@ -30,6 +30,7 @@
   </div>
 </template>
 <script>
+import { getAllPlace } from '@/apis/place'
 export default {
   data() {
     return {
@@ -78,6 +79,20 @@ export default {
           minWidth: '10'
         }
       ]
+    }
+  },
+
+  async created() {
+    await this.getComment()
+  },
+
+  methods: {
+    async getComment() {
+      const res = await getAllPlace({
+        page: this.page,
+        pageSize: this.limit
+      })
+      console.log(res)
     }
   }
 }
