@@ -1,5 +1,15 @@
 <template lang="html">
   <div class="content-main-container">
+    <h2 class="my-[1em] text-lg font-500">Khoảng thời gian</h2>
+    <el-date-picker
+      v-model="dateSearch"
+      type="daterange"
+      range-separator="To"
+      start-placeholder="Start date"
+      end-placeholder="End date"
+      :size="size"
+    />
+     <el-button class="btn--green btn ml-[1em]" icon="el-icon-circle-check" @click="onSearch">Tìm kiếm</el-button>
     <el-row :gutter="24">
       <el-col :xs="12" :sm="12" :md="8" class="mb-[1em]">
         <div class="flex box-shadow-1 rounded-md w-fit px-[16px] py-[0.5rem] w-full">
@@ -8,7 +18,7 @@
             <p class="text-lg font-bold text-[#3a3a3a] mb-[0.5em] overflow-hidden overflow-ellipsis whitespace-nowrap">
               Tổng số đơn hàng
             </p>
-            <p class="text-center text-[#00b5ad] text-[24px]">86</p>
+            <p class="text-center text-[#00b5ad] text-[24px]">{{ orders }}</p>
           </div>
         </div>
       </el-col>
@@ -18,9 +28,20 @@
           <v-icon icon-class="debt" class="text-[80px] mr-[8px]" />
           <div class="overflow-hidden flex-1 text-center">
             <p class="text-lg font-bold text-[#3a3a3a] mb-[0.5em] overflow-hidden overflow-ellipsis whitespace-nowrap">
-              Tổng nợ
+              Số sân đang hoạt động
             </p>
-            <p class="text-center text-[#00b5ad] text-[24px]">125.000.000đ</p>
+            <p class="text-center text-[#00b5ad] text-[24px]">{{ numberPlaceAtive }}</p>
+          </div>
+        </div>
+      </el-col>
+      <el-col :xs="12" :sm="12" :md="8" class="mb-[1em]">
+        <div class="flex box-shadow-1 rounded-md w-fit px-[16px] py-[0.5rem] w-full">
+          <v-icon icon-class="debt" class="text-[80px] mr-[8px]" />
+          <div class="overflow-hidden flex-1 text-center">
+            <p class="text-lg font-bold text-[#3a3a3a] mb-[0.5em] overflow-hidden overflow-ellipsis whitespace-nowrap">
+              Doanh thu của hệ thống
+            </p>
+            <p class="text-center text-[#00b5ad] text-[24px]">{{ gasFee }}</p>
           </div>
         </div>
       </el-col>
@@ -32,7 +53,7 @@
             <p class="text-lg font-bold text-[#3a3a3a] mb-[0.5em] overflow-hidden overflow-ellipsis whitespace-nowrap">
               Tổng doanh thu
             </p>
-            <p class="text-center text-[#00b5ad] text-[24px]">12.000.000đ</p>
+            <p class="text-center text-[#00b5ad] text-[24px]">{{ revenue }}</p>
           </div>
         </div>
       </el-col>
@@ -40,6 +61,44 @@
   </div>
 </template>
 <script>
-export default {}
+import { getAdminDashBoad } from '../../apis/dashboad'
+import moment from 'moment'
+export default {
+  data() {
+    return {
+      revenue: '',
+      orders: '',
+      numberPlaceAtive: 0,
+      gasFee: '',
+      dateStart: '',
+      dateEnd: '',
+      ownerActive: '',
+      userActive: '',
+      dateSearch: []
+    }
+  },
+  async created() {
+    const res = await getAdminDashBoad({
+      dateStart: '1999/03/10',
+      dateEnd: '2500/09/10'
+    })
+    this.revenue = res.data.revenue
+    this.orders = res.data.orders
+    this.numberPlaceAtive = res.data.numberPlaceAtive
+    this.gasFee = res.data.gasFee
+  },
+  methods: {
+    async onSearch() {
+      const res = await getAdminDashBoad({
+        dateStart: moment(new Date(this.dateSearch[0])).format('YYYY/MM/DD'),
+        dateEnd: moment(new Date(this.dateSearch[1])).format('YYYY/MM/DD')
+      })
+      this.revenue = res.data.revenue
+      this.orders = res.data.orders
+      this.numberPlaceAtive = res.data.numberPlaceAtive
+      this.gasFee = res.data.gasFee
+    }
+  }
+}
 </script>
 <style lang=""></style>

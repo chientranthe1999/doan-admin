@@ -109,7 +109,7 @@ export default {
         station: `${res.place.name}-${res.place.address}`,
         name: '',
         phone: res.phoneNumber,
-        money: res.money +'VND',
+        money: res.money + 'VND',
         time: res.timeBlocks[0].timeStart,
         created_at: res.createAt
       }
