@@ -15,19 +15,19 @@ const allRoutes = [
         path: '',
         name: 'Dashboard',
         component: () => import('@/views/manage/Dashboard'),
-        meta: { title: 'Dashboard' }
+        meta: { title: 'Dashboard', roles: [ROLES.SUPER_ADMIN] }
       },
       {
         path: 'debt',
         name: 'DebtList',
         component: () => import('@/views/manage/Debt'),
-        meta: { title: 'Quản lý công nợ' }
+        meta: { title: 'Quản lý công nợ', roles: [ROLES.SUPER_ADMIN] }
       },
       {
         path: 'booking',
         name: 'BookingList',
         component: () => import('@/views/manage/Booking'),
-        meta: { title: 'Quản lý đơn hàng' }
+        meta: { title: 'Quản lý đơn hàng', roles: [ROLES.SUPER_ADMIN] }
       },
       {
         path: 'booking-list-owner',
@@ -130,14 +130,20 @@ const allRoutes = [
         path: 'list/type',
         name: 'ArticleTypeList',
         component: () => import('@/views/article/ListType'),
-        meta: { title: 'Danh sách thể loại bài viết', roles: [ROLES.SUPER_ADMIN] }
+        meta: {
+          title: 'Danh sách thể loại bài viết',
+          roles: [ROLES.SUPER_ADMIN]
+        }
       },
       {
         path: 'type/edit/:id',
         name: 'ArticleTypeEdit',
         hidden: true,
         component: () => import('@/views/article/EditType'),
-        meta: { title: 'Chỉnh sửa thể loại bài viết', roles: [ROLES.SUPER_ADMIN] }
+        meta: {
+          title: 'Chỉnh sửa thể loại bài viết',
+          roles: [ROLES.SUPER_ADMIN]
+        }
       },
       {
         path: 'edit/:id',
@@ -179,7 +185,11 @@ const allRoutes = [
   {
     path: '/user',
     component: AmdinLayout,
-    meta: { title: 'Quản lý chủ sân', icon: 'el-icon-s-custom', roles: [ROLES.SUPER_ADMIN] },
+    meta: {
+      title: 'Quản lý chủ sân',
+      icon: 'el-icon-s-custom',
+      roles: [ROLES.SUPER_ADMIN]
+    },
     children: [
       {
         path: '',
