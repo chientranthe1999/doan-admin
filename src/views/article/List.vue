@@ -106,7 +106,6 @@ export default {
         })
 
         this.total = res.data.data.total
-        console.log(res)
       } catch (e) {
         console.log(e)
       }

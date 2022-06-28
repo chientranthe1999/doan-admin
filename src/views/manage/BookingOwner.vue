@@ -14,7 +14,9 @@
             <div class="flex box-shadow-1 rounded-md w-fit px-[16px] py-[0.5rem] w-full">
               <v-icon icon-class="cart" class="text-[80px] mr-[8px]" />
               <div class="overflow-hidden flex-1 text-center">
-                <p class="text-lg font-bold text-[#3a3a3a] mb-[0.5em] overflow-hidden overflow-ellipsis whitespace-nowrap">
+                <p
+                  class="text-lg font-bold text-[#3a3a3a] mb-[0.5em] overflow-hidden overflow-ellipsis whitespace-nowrap"
+                >
                   Tổng số đơn hàng
                 </p>
                 <p class="text-center text-[#00b5ad] text-[24px]">{{ totalOrders }}</p>
@@ -26,29 +28,22 @@
             <div class="flex box-shadow-1 rounded-md w-fit px-[16px] py-[0.5rem] w-full">
               <v-icon icon-class="debt" class="text-[80px] mr-[8px]" />
               <div class="overflow-hidden flex-1 text-center">
-                <p class="text-lg font-bold text-[#3a3a3a] mb-[0.5em] overflow-hidden overflow-ellipsis whitespace-nowrap">
+                <p
+                  class="text-lg font-bold text-[#3a3a3a] mb-[0.5em] overflow-hidden overflow-ellipsis whitespace-nowrap"
+                >
                   Doanh thu
                 </p>
                 <p class="text-center text-[#00b5ad] text-[24px]">{{ money }}</p>
               </div>
             </div>
           </el-col>
-
         </el-row>
 
         <h2 class="my-[1em] text-lg font-500">Thông tin chi tiết</h2>
 
-        <v-table
-          :table-data="results"
-          :columns="cols"
-          :limit="limit"
-          :page="page"
-          :total="total"
-        >
+        <v-table :table-data="results" :columns="cols" :limit="limit" :page="page" :total="total">
           <template slot="status">
-            <div
-              class="text-center bg-[#00b5ad] text-[white] rounded-lg py-[0.5rem] w-[85%] mx-auto"
-            >
+            <div class="text-center bg-[#00b5ad] text-[white] rounded-lg py-[0.5rem] w-[85%] mx-auto">
               Đã thanh toán
             </div>
           </template>
@@ -143,18 +138,12 @@ export default {
         name: '',
         phone: res.phoneNumber,
         money: res.money + 'VND',
-        time:
-          res.timeBlocks[0].timeStart +
-          ' Đến ' +
-          timeEnd +
-          ' Ngày ' +
-          res.dayOrder,
+        time: res.timeBlocks[0].timeStart + ' Đến ' + timeEnd + ' Ngày ' + res.dayOrder,
         created_at: res.createAt
       }
     })
     this.money = money
     this.totalOrders = this.results.length
-    console.log(this.results)
   }
 }
 </script>

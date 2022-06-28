@@ -292,7 +292,6 @@ export default {
     async getCities() {
       const { data } = await getAddress()
       this.cities = data
-      console.log(this.cities)
     },
 
     async onCityChange() {

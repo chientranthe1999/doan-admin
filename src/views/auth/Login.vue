@@ -17,6 +17,7 @@
   </div>
 </template>
 <script>
+import { ROLES } from '@/utils/constants'
 export default {
   name: 'LoginView',
 
@@ -55,7 +56,12 @@ export default {
             password: this.form.password
           })
 
-          this.$router.push('/manage')
+          if (this.$store.getters['role'] === ROLES.ADMIN) {
+            this.$router.push({ name: 'BookingListOwner' })
+          } else {
+            this.$router.push('/manage')
+          }
+
           this.$vmess.success('Đăng nhập thành công')
         }
       } catch (e) {

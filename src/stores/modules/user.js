@@ -29,7 +29,10 @@ const actions = {
       login({ email: email.trim(), password: password })
         .then((res) => {
           const { data } = res
+
           commit('SET_TOKEN', data.token)
+          commit('SET_ROLES', data.role)
+
           setToken(data.token)
           resolve()
         })
