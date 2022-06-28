@@ -1,6 +1,6 @@
 <template lang="html">
   <div class="content-main-container">
-    <h2 class="my-[1em] text-lg font-500">Khoảng thời gian</h2>
+    <!-- <h2 class="my-[1em] text-lg font-500">Khoảng thời gian</h2>
     <el-date-picker
       v-model="dateSearch"
       type="daterange"
@@ -8,7 +8,7 @@
       start-placeholder="Start date"
       end-placeholder="End date"
     />
-    <el-button class="btn--green btn ml-[1em]" icon="el-icon-circle-check" @click="onSearch">Tìm kiếm</el-button>
+    <el-button class="btn--green btn ml-[1em]" icon="el-icon-circle-check" @click="onSearch">Tìm kiếm</el-button> -->
 
     <el-row :gutter="24" class="mt-[2em]">
       <el-col :xs="12" :sm="12" :md="8" class="mb-[1em]">
