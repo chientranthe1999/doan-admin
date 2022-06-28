@@ -11,13 +11,6 @@
     <div class="content-main-container">
       <div class="bg-white box-shadow-1 p-[0.5em] rounded-md">
         <div class="p-[1em] rounded-sm mb-[1em] flex items-center">
-          <p class="text-md uppercase mr-[1em]">Mức phí gas</p>
-          <div class="text-lg font-bold text-[#e84c3d] mr-[1em]">
-            <el-input v-model="gas" class="w-60px" disabled /> %
-          </div>
-          <el-button type="success" icon="el-icon-edit" circle />
-        </div>
-        <div class="p-[1em] rounded-sm mb-[1em] flex items-center">
           <p class="text-md uppercase">Tổng số tiền cần thanh toán với chủ sân</p>
           <p class="ml-[auto] text-lg font-bold text-[#e84c3d]">125.000.000đ</p>
         </div>
