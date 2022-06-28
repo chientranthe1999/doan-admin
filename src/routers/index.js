@@ -33,7 +33,7 @@ const allRoutes = [
         path: 'booking-list-owner',
         name: 'BookingList',
         component: () => import('@/views/manage/BookingOwner'),
-        meta: { title: 'Quản lý đơn hàng của chủ sân', roles: [ROLES.ADMIN]}
+        meta: { title: 'Quản lý đơn hàng của chủ sân', roles: [ROLES.ADMIN] }
       },
       {
         path: 'charge',
@@ -60,6 +60,7 @@ const allRoutes = [
         component: () => import('@/views/stadium/AdminList'),
         meta: { title: 'Sân vận động', roles: [ROLES.SUPER_ADMIN] }
       },
+
       {
         path: 'add',
         name: 'StadiumAdd',
@@ -73,6 +74,13 @@ const allRoutes = [
         component: () => import('@/views/stadium/Edit'),
         meta: { title: 'Chỉnh sửa sân', roles: [ROLES.ADMIN] },
         hidden: true
+      },
+
+      {
+        path: '/day-offs',
+        name: 'AddDayOff',
+        component: () => import('@/views/stadium/DayOff'),
+        meta: { title: 'Thêm ngày nghỉ', roles: [ROLES.ADMIN] }
       },
       {
         path: 'type',

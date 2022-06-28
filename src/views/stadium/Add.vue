@@ -18,7 +18,7 @@
                     </el-form-item>
                   </el-col>
 
-                  <!-- car -->
+                  <!-- name -->
                   <el-col :xs="24" :sm="24" :md="12" :lg="12" :xl="12">
                     <el-form-item label="Tên sân" prop="name">
                       <el-input
@@ -28,6 +28,51 @@
                         show-word-limit
                         placeholder="Nhập vào tên sân"
                       />
+                    </el-form-item>
+                  </el-col>
+                </el-row>
+
+                <el-row :gutter="12">
+                  <el-col :xs="24" :sm="24" :md="12" :lg="12" :xl="12">
+                    <el-form-item label="Chọn Tỉnh/Thành Phố">
+                      <el-select
+                        ref="city"
+                        v-model="cityCode"
+                        placeholder="Chọn Tỉnh/Thành phố"
+                        class="w-full"
+                        clearable
+                        @change="onCityChange"
+                      >
+                        <el-option
+                          v-for="(city, i) in cities"
+                          :key="'city' + i"
+                          :value="city.code"
+                          :label="city.name_with_type"
+                        >
+                          {{ city.name_with_type }}
+                        </el-option>
+                      </el-select>
+                    </el-form-item>
+                  </el-col>
+                  <el-col :xs="24" :sm="24" :md="12" :lg="12" :xl="12">
+                    <el-form-item label="Chọn Quận/Huyện">
+                      <el-select
+                        ref="district"
+                        v-model="districtCode"
+                        placeholder="Chọn Quận/Huyện"
+                        class="w-full"
+                        :disabled="!cityCode"
+                        clearable
+                      >
+                        <el-option
+                          v-for="(item, i) in districts"
+                          :key="'district' + i"
+                          :value="item.code"
+                          :label="item.name_with_type"
+                        >
+                          {{ item.name_with_type }}
+                        </el-option>
+                      </el-select>
                     </el-form-item>
                   </el-col>
                 </el-row>
@@ -188,24 +233,12 @@
         </div>
       </section>
     </main>
-
-    <!-- dialog add new place type -->
-    <!-- <el-dialog title="Tạo loại sân mới" :visible.sync="isOpenType">
-      <el-form :model="form">
-        <el-form-item label="Loại sân">
-          <el-input v-model="form.name" autocomplete="off" show-word-limit maxlength="50" />
-        </el-form-item>
-      </el-form>
-      <span slot="footer" class="dialog-footer">
-        <el-button @click="isOpenType = false">Cancel</el-button>
-        <el-button type="primary" @click="dialogFormVisible = false">Confirm</el-button>
-      </span>
-    </el-dialog> -->
   </div>
 </template>
 
 <script>
 import { getPlaceType, createPlace } from '@/apis/place'
+import { getAddress } from '@/apis/address'
 export default {
   data() {
     return {
@@ -213,6 +246,10 @@ export default {
 
       rules: {},
       type: {},
+      cityCode: null,
+      districtCode: null,
+      cities: [],
+      districts: [],
 
       fileList: [],
       timeOptions: {
@@ -248,12 +285,43 @@ export default {
   },
 
   async created() {
-    await this.getPlaceType()
+    await Promise.all([this.getPlaceType(), this.getCities()])
   },
 
   methods: {
+    async getCities() {
+      const { data } = await getAddress()
+      this.cities = data
+      console.log(this.cities)
+    },
+
+    async onCityChange() {
+      try {
+        if (!this.cityCode) {
+          this.districtCode = null
+          return false
+        }
+
+        const { data } = await getAddress({ cityCode: this.cityCode })
+        this.districts = data
+      } catch (e) {
+        this.$vmess.error('Đã có lỗi xảy ra xin vui lòng thử  lại sau')
+      }
+    },
     async createPlace() {
       try {
+        await this.$nextTick()
+        const address = []
+        if (this.$refs.city.selectedLabel) {
+          address.push(this.$refs.city.selectedLabel)
+        }
+
+        if (this.$refs.district.selectedLabel) {
+          address.push(this.$refs.district.selectedLabel)
+        }
+
+        address.push(this.form.address)
+
         const sendData = {
           ...this.form,
           typePlace: {
@@ -264,13 +332,16 @@ export default {
               ...item,
               image: ''
             }
-          })
+          }),
+          address: address.join(', ')
         }
+
         await createPlace(sendData)
         this.$vmess.success('Thêm sân mới thành công')
         this.$router.push('/stadium')
       } catch (error) {
-        this.$vmess.error(error.response.data.message)
+        console.log(error)
+        this.$vmess.error('Đã có lỗi xảy ra! Vui lòng thử lại sau')
       }
     },
 

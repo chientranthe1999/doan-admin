@@ -34,3 +34,7 @@ export function createPlace(data) {
 export function updatePlace(id, data) {
   return request.put('/owner/place/' + id, data)
 }
+
+export function createDayOff(data) {
+  return request.post('/owner/place/day-off', data)
+}
