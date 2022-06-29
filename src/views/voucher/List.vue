@@ -26,9 +26,9 @@
                 <p class="font-400 text-xs">Điều kiện áp dụng đơn từ : {{ voucher.moneyCondition }} VND</p>
                 <p class="font-400 text-xs">Giảm tối đa : {{ voucher.moneyCondition }} VND</p>
                 <p class="font-400 text-xs">Ngày hết hạn: {{ voucher.endDate }}</p>
-                <p class="font-400 text-xs">
-                  Địa điểm áp dụng: {{ voucher.place.name }}-
-                  {{ voucher.place.address }}
+                <p class="font-400 text-xs" v-if="voucher.place">
+                  Địa điểm áp dụng: {{ voucher.place.name||'' }}-
+                  {{ voucher.place.address||'' }}
                 </p>
               </div>
             </div>
@@ -62,6 +62,8 @@ export default {
   async mounted() {
     const dataVoucher = await getVoucher()
     this.listVoucher = dataVoucher.data.data.records
+    console.log(dataVoucher.data.data.records)
+    console.log(this.listVoucher)
   },
   methods: {
     onClickVoucher(id) {

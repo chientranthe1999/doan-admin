@@ -15,3 +15,7 @@ export function getSystemctlConfig() {
 export function editSystemConfig(data) {
   return request.put('admin/system-config', data)
 }
+
+export function payOwner(data) {
+  return request.put('/admin/pay-owner', data)
+}

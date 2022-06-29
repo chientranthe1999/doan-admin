@@ -41,7 +41,7 @@
             <p class="text-lg font-bold text-[#3a3a3a] mb-[0.5em] overflow-hidden overflow-ellipsis whitespace-nowrap">
               Doanh thu của hệ thống
             </p>
-            <p class="text-center text-[#00b5ad] text-[24px]">{{ gasFee }}</p>
+            <p class="text-center text-[#00b5ad] text-[24px]">{{ gasFee }}VNĐ</p>
           </div>
         </div>
       </el-col>
@@ -53,7 +53,7 @@
             <p class="text-lg font-bold text-[#3a3a3a] mb-[0.5em] overflow-hidden overflow-ellipsis whitespace-nowrap">
               Số tài khoản khách hàng
             </p>
-            <p class="text-center text-[#00b5ad] text-[24px]">{{ gasFee }}</p>
+            <p class="text-center text-[#00b5ad] text-[24px]">{{ numberUser }}</p>
           </div>
         </div>
       </el-col>
@@ -64,7 +64,7 @@
             <p class="text-lg font-bold text-[#3a3a3a] mb-[0.5em] overflow-hidden overflow-ellipsis whitespace-nowrap">
               Số tài khoản khách chủ sân
             </p>
-            <p class="text-center text-[#00b5ad] text-[24px]">{{ gasFee }}</p>
+            <p class="text-center text-[#00b5ad] text-[24px]">{{ numberOwner }}</p>
           </div>
         </div>
       </el-col>
@@ -76,7 +76,7 @@
             <p class="text-lg font-bold text-[#3a3a3a] mb-[0.5em] overflow-hidden overflow-ellipsis whitespace-nowrap">
               Tổng doanh thu
             </p>
-            <p class="text-center text-[#00b5ad] text-[24px]">{{ revenue }}</p>
+            <p class="text-center text-[#00b5ad] text-[24px]">{{ revenue }} VND</p>
           </div>
         </div>
       </el-col>
@@ -97,7 +97,11 @@
   </div>
 </template>
 <script>
-import { getAdminDashBoad, getSystemctlConfig, editSystemConfig } from '@/apis/dashboad'
+import {
+  getAdminDashBoad,
+  getSystemctlConfig,
+  editSystemConfig
+} from '@/apis/dashboad'
 import moment from 'moment'
 export default {
   data() {
@@ -106,6 +110,8 @@ export default {
       orders: '',
       numberPlaceAtive: 0,
       gasFee: '',
+      numberUser: '',
+      numberOwner: '',
       dateStart: '',
       dateEnd: '',
       ownerActive: '',
@@ -129,6 +135,8 @@ export default {
     const systemConfig = await getSystemctlConfig()
     this.form.gasFee = systemConfig.data.gasFee
     this.form.dateRefundMoney = systemConfig.data.dateRefundMoney
+    this.numberUser = res.data.users
+     this.numberOwner = res.data.owner
   },
   methods: {
     async onSearch() {
