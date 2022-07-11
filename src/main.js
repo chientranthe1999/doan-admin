@@ -21,6 +21,8 @@ import '@/components' // global components
 
 import '@/icons' // icon
 
+import '@/filters/format' // global filters
+
 import request from '@/utils/request'
 Vue.prototype.$axios = request
 

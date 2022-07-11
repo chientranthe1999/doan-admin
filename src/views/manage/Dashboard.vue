@@ -53,7 +53,7 @@
             <p class="text-lg font-bold text-[#3a3a3a] mb-[0.5em] overflow-hidden overflow-ellipsis whitespace-nowrap">
               Số tài khoản khách hàng
             </p>
-            <p class="text-center text-[#00b5ad] text-[24px]">{{ gasFee }}</p>
+            <p class="text-center text-[#00b5ad] text-[24px]">{{ gasFee | formatNumber }}</p>
           </div>
         </div>
       </el-col>
@@ -64,7 +64,7 @@
             <p class="text-lg font-bold text-[#3a3a3a] mb-[0.5em] overflow-hidden overflow-ellipsis whitespace-nowrap">
               Số tài khoản khách chủ sân
             </p>
-            <p class="text-center text-[#00b5ad] text-[24px]">{{ gasFee }}</p>
+            <p class="text-center text-[#00b5ad] text-[24px]">{{ gasFee | formatNumber }}</p>
           </div>
         </div>
       </el-col>
@@ -76,7 +76,7 @@
             <p class="text-lg font-bold text-[#3a3a3a] mb-[0.5em] overflow-hidden overflow-ellipsis whitespace-nowrap">
               Tổng doanh thu
             </p>
-            <p class="text-center text-[#00b5ad] text-[24px]">{{ revenue }}</p>
+            <p class="text-center text-[#00b5ad] text-[24px]">{{ revenue | formatMoney }}</p>
           </div>
         </div>
       </el-col>

@@ -49,23 +49,22 @@ export default {
     async login() {
       try {
         this.loading = true
-        const isValid = await this.$refs.form.validate()
-        if (isValid) {
-          await this.$store.dispatch('user/login', {
-            email: this.form.email,
-            password: this.form.password
-          })
+        await this.$refs.form.validate()
 
-          if (this.$store.getters['role'] === ROLES.ADMIN) {
-            this.$router.push({ name: 'BookingListOwner' })
-          } else {
-            this.$router.push('/manage')
-          }
+        await this.$store.dispatch('user/login', {
+          email: this.form.email,
+          password: this.form.password
+        })
 
-          this.$vmess.success('Đăng nhập thành công')
+        if (this.$store.getters['role'] === ROLES.ADMIN) {
+          this.$router.push({ name: 'BookingListOwner' })
+        } else {
+          this.$router.push('/manage')
         }
+
+        this.$vmess.success('Đăng nhập thành công')
       } catch (e) {
-        this.$vmess.error(e?.response?.data?.message || 'Đăng nhập thất bại')
+        this.$vmess.error(e?.response?.data?.message || 'Đăng nhập không thành công')
       } finally {
         this.loading = false
       }
