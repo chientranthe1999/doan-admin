@@ -64,7 +64,7 @@ export default {
 
         this.$vmess.success('Đăng nhập thành công')
       } catch (e) {
-        this.$vmess.error(e?.response?.data?.message || 'Đăng nhập không thành công')
+        this.$vmess.error(e?.response?.data?.message || e || 'Đăng nhập không thành công')
       } finally {
         this.loading = false
       }

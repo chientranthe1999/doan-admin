@@ -1,6 +1,7 @@
 import { login, getInfor } from '@/apis/auth'
 import { getToken, setToken, removeToken } from '@/utils/auth'
 import router, { resetRouter } from '@/routers'
+import { ROLES } from '@/utils/constants'
 
 const state = {
   token: getToken(),
@@ -29,6 +30,8 @@ const actions = {
       login({ email: email.trim(), password: password })
         .then((res) => {
           const { data } = res
+
+          if (data.role === ROLES.USER) return reject('Bạn không có quyền truy cập')
 
           commit('SET_TOKEN', data.token)
           commit('SET_ROLES', data.role)

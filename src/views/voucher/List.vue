@@ -9,7 +9,7 @@
     />
 
     <main class="content-main-container">
-      <el-row :gutter="12" class="box-shadow-1 rounded-sm py-[1rem] min-h-[80vh]">
+      <el-row v-if="listVoucher.length" :gutter="12" class="box-shadow-1 rounded-sm py-[1rem] min-h-[80vh]">
         <el-col v-for="voucher in listVoucher" :key="voucher.id" :xs="24" :sm="12" :md="12" :lg="12">
           <div
             class="flex mx-auto w-fit mb-[1.5em] cursor-pointer hover:opacity-70"
@@ -26,9 +26,9 @@
                 <p class="font-400 text-xs">Điều kiện áp dụng đơn từ : {{ voucher.moneyCondition }} VND</p>
                 <p class="font-400 text-xs">Giảm tối đa : {{ voucher.moneyCondition }} VND</p>
                 <p class="font-400 text-xs">Ngày hết hạn: {{ voucher.endDate }}</p>
-                <p class="font-400 text-xs" v-if="voucher.place">
-                  Địa điểm áp dụng: {{ voucher.place.name||'' }}-
-                  {{ voucher.place.address||'' }}
+                <p v-if="voucher.place" class="font-400 text-xs">
+                  Địa điểm áp dụng: {{ voucher.place.name || '' }}-
+                  {{ voucher.place.address || '' }}
                 </p>
               </div>
             </div>
@@ -46,6 +46,8 @@
           </div>
         </el-col>
       </el-row>
+
+      <el-empty v-else />
     </main>
   </div>
 </template>

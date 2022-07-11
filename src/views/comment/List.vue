@@ -4,13 +4,13 @@
 
     <div class="content-main-container">
       <div class="box-shadow-2 bg-white rounded-md p-[1em]">
-        <el-form>
+        <!-- <el-form>
           <el-form-item label="Sân" :inline="true">
             <el-select class="w-[240px]">
               <el-option>Chọn sân của bạn</el-option>
             </el-select>
           </el-form-item>
-        </el-form>
+        </el-form> -->
         <div class="bg-white">
           <v-table :table-data="results" :columns="cols" :limit="limit" :page="page" :total="total">
             <template slot="status">
@@ -37,16 +37,10 @@ export default {
     return {
       loading: false,
       isOpen: false,
-      total: 30,
+      total: 0,
       page: 1,
       limit: 20,
-      results: [
-        {
-          name: 'Thắng Dp',
-          phone: '12345678',
-          status: 'Active'
-        }
-      ],
+      results: [],
 
       cols: [
         {

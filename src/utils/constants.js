@@ -12,6 +12,7 @@ export const HTTP_STATUS = {
 export const LIMITS = [20, 50, 100, 200]
 
 export const ROLES = {
+  USER: 1,
   ADMIN: 2,
   SUPER_ADMIN: 3
 }
