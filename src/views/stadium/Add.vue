@@ -239,12 +239,12 @@
 <script>
 import { getPlaceType, createPlace } from '@/apis/place'
 import { getAddress } from '@/apis/address'
+import moment from 'moment'
 export default {
   data() {
     return {
       loading: false,
 
-      rules: {},
       type: {},
       cityCode: null,
       districtCode: null,
@@ -253,23 +253,35 @@ export default {
 
       fileList: [],
       timeOptions: {
-        start: '08:30',
+        start: '05:30',
         step: '01:00',
-        end: '21:30'
+        end: '22:30'
       },
       form: {
+        typePlace: '',
         name: '',
         address: '',
         timeOpen: '',
         description: '',
         timeClose: '',
         timeDistance: 90,
+        priceMin: null,
 
         imageDetails: [],
         limitUsers: 24,
         services: [{}],
-        timeGold: [{}],
-        typePlace: null
+        timeGold: [{}]
+      },
+      rules: {
+        name: [{ required: true, message: 'Tên sân không được để trống', trigger: 'blur' }],
+        address: [{ required: true, message: 'Địa chỉ không được để trống', trigger: 'blur' }],
+        timeOpen: [{ required: true, message: 'Thời gian mở cửa không được để trống', trigger: 'blur' }],
+        timeClose: [{ required: true, message: 'Thời gian đóng cửa không được để trống', trigger: 'blur' }],
+        timeDistance: [{ required: true, message: 'Khoảng cách không được để trống', trigger: 'blur' }],
+        limitUsers: [{ required: true, message: 'Số người tối đa trên sân không được để trống', trigger: 'blur' }],
+        typePlace: [{ required: true, message: 'Hãy chọn loại sân', trigger: 'blur' }],
+        priceMin: [{ required: true, message: 'Giá thuê không được bỏ trống', trigger: 'blur' }],
+        description: [{ required: true, message: 'Mô tả không được bỏ trống', trigger: 'blur' }]
       }
     }
   },
@@ -278,7 +290,7 @@ export default {
     goldTimeOptions() {
       return {
         start: this.form.timeOpen,
-        step: '00:30',
+        step: this._getTimeStep(),
         end: this.form.timeClose
       }
     }
@@ -304,12 +316,13 @@ export default {
         const { data } = await getAddress({ cityCode: this.cityCode })
         this.districts = data
       } catch (e) {
-        this.$vmess.error('Đã có lỗi xảy ra xin vui lòng thử  lại sau')
+        this.$vmess.error('Đã có lỗi xảy ra xin vui lòng thử lại sau')
       }
     },
     async createPlace() {
       try {
         await this.$nextTick()
+        await this.$refs.form.validate()
         const address = []
         if (this.$refs.city.selectedLabel) {
           address.push(this.$refs.city.selectedLabel)
@@ -321,27 +334,67 @@ export default {
 
         address.push(this.form.address)
 
+        const {
+          name,
+          timeOpen,
+          description,
+          timeClose,
+          timeDistance,
+          priceMin,
+
+          imageDetails,
+          limitUsers,
+          services,
+          timeGold
+        } = this.form
+
         const sendData = {
-          ...this.form,
+          name,
+          timeOpen,
+          description,
+          timeClose,
+          timeDistance,
+          priceMin,
+
+          imageDetails,
+          limitUsers,
           typePlace: {
             id: this.form.typePlace
           },
-          services: this.form.services.map((item) => {
+
+          address: address.join(', ')
+        }
+
+        console.log(sendData)
+
+        if (services[0].price) {
+          sendData.services = this.form.services.map((item) => {
             return {
               ...item,
               image: ''
             }
-          }),
-          address: address.join(', ')
+          })
+        }
+
+        if (timeGold[0].price) {
+          sendData.timeGold = timeGold
         }
 
         await createPlace(sendData)
         this.$vmess.success('Thêm sân mới thành công')
         this.$router.push('/stadium')
       } catch (error) {
-        console.log(error)
-        this.$vmess.error('Đã có lỗi xảy ra! Vui lòng thử lại sau')
+        if (error) {
+          this.$vmess.error('Đã có lỗi xảy ra! Vui lòng thử lại sau')
+        }
       }
+    },
+
+    _getTimeStep() {
+      if (!this.form.timeDistance) return '00:30'
+      var h = (this.form.timeDistance / 60) | 0
+      var m = this.form.timeDistance % 60 | 0
+      return moment.utc().hours(h).minutes(m).format('hh:mm')
     },
 
     handlePreview(file) {

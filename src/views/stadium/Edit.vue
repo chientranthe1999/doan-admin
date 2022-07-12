@@ -211,7 +211,6 @@ export default {
     return {
       loading: false,
 
-      rules: {},
       type: {},
 
       fileList: [],
@@ -233,6 +232,17 @@ export default {
         services: [{}],
         timeGold: [{}],
         typePlace: null
+      },
+      rules: {
+        name: [{ required: true, message: 'Tên sân không được để trống', trigger: 'blur' }],
+        address: [{ required: true, message: 'Địa chỉ không được để trống', trigger: 'blur' }],
+        timeOpen: [{ required: true, message: 'Thời gian mở cửa không được để trống', trigger: 'blur' }],
+        timeClose: [{ required: true, message: 'Thời gian đóng cửa không được để trống', trigger: 'blur' }],
+        timeDistance: [{ required: true, message: 'Khoảng cách không được để trống', trigger: 'blur' }],
+        limitUsers: [{ required: true, message: 'Số người tối đa trên sân không được để trống', trigger: 'blur' }],
+        typePlace: [{ required: true, message: 'Hãy chọn loại sân', trigger: 'blur' }],
+        priceMin: [{ required: true, message: 'Giá thuê không được bỏ trống', trigger: 'blur' }],
+        description: [{ required: true, message: 'Mô tả không được bỏ trống', trigger: 'blur' }]
       }
     }
   },
@@ -263,7 +273,6 @@ export default {
             url: item
           }
         })
-        console.log(res)
       } catch (error) {
         this.$vmess.error(error.response.data.message)
       }
@@ -288,6 +297,7 @@ export default {
 
     async updatePlace() {
       try {
+        await this.$refs.form.validate()
         const {
           name,
           address,
@@ -311,19 +321,11 @@ export default {
 
           imageDetails,
           limitUsers
-          // timeGold,
-          // typePlace: {
-          //   id: this.form.typePlace
-          // },
-          // services: this.form.services.map((item) => {
-          //   return {
-          //     ...item,
-          //     image: ''
-          //   }
-          // })
         }
 
-        const res = await updatePlace(this.$route.params.id, sendData)
+        await updatePlace(this.$route.params.id, sendData)
+        this.$vmess.success('Cập nhật thành công')
+        this.$router.push('/stadium')
       } catch (e) {
         this.$vmess.error(e.response.data.message)
       }

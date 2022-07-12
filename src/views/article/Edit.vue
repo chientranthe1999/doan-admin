@@ -3,7 +3,7 @@
     <v-header title-text="Thêm bài viết mới" title-icon="el-icon-notebook-1" />
     <div class="content-main-container">
       <div class="bg-[white] rounded-md p-[0.5em] box-shadow-1">
-        <el-form :model="form" :rules="rules">
+        <el-form ref="form" :model="form" :rules="rules">
           <el-form-item label="Tiêu đề bài viết" prop="title">
             <el-input v-model="form.title" class="w-100" maxlength="200" show-word-limit placeholder="Tiêu đề" />
           </el-form-item>
@@ -106,9 +106,15 @@ export default {
       this.form.typeArticle = typeArticle
     },
     async onSubmit() {
-      await editArticle(this.$route.params.id, this.form)
-      this.$vmess.success('Chỉnh sửa thành công')
-      this.$router.push('/article')
+      try {
+        await this.$refs.form.validate()
+
+        await editArticle(this.$route.params.id, this.form)
+        this.$vmess.success('Chỉnh sửa thành công')
+        this.$router.push('/article')
+      } catch (e) {
+        console.error(e)
+      }
     },
     handleUploadSuccess(e) {
       this.form.image = e.data
