@@ -40,6 +40,12 @@ const allRoutes = [
         name: 'ChargeList',
         component: () => import('@/views/manage/Charge'),
         meta: { title: 'Quản lý nạp thẻ', roles: [ROLES.SUPER_ADMIN] }
+      },
+      {
+        path: 'report',
+        name: 'ReportList',
+        component: () => import('@/views/manage/Report'),
+        meta: { title: 'Quản lý khiếu nại', roles: [ROLES.SUPER_ADMIN, ROLES.ADMIN] }
       }
     ]
   },

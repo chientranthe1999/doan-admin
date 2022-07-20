@@ -4,4 +4,6 @@ export function getOrderOwner() {
   return request.get('owner/order')
 }
 
-export function getOrderAdmin() {}
+export function getReportOwner() {
+  return request.get('owner/order/report')
+}

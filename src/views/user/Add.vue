@@ -139,7 +139,7 @@ export default {
             phone: this.form.phone,
             stk: this.form.stk,
             bankSymbol: this.form.bankSymbol,
-            name: this.form.name
+            fullName: this.form.name
           }
         }
         await register(ownerPlace)
